@@ -16,5 +16,9 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/', 'HomeController@index')->name('home');
 	Route::get('home', 'HomeController@index');
-	Route::get('tes', 'tesController@tes');
+	Route::get('tes', 'tesController@tes')->name('tes');
+
+	// SETTING
+		// CARI MENU
+		Route::get('cari_menu', 'setting/settingController@cari_menu')->name('cari_menu');
 });

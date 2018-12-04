@@ -7,6 +7,7 @@ use DB;
 use Config;
 use App\models;
 use App\basis_data;
+use Auth;
 class tesController extends Controller
 {
 	protected $db;
@@ -19,11 +20,9 @@ class tesController extends Controller
 	}
     public function tes()
     {
+    	
+    	$this->db->connect();
 
-    	$tes = 'asd';
-
-    	$this->db->connect($tes,'localhost','jpmandiri','root','');
-
-		return $data1 = DB::connection($tes)->table('s_jabatan')->get();
+		return $data1 = DB::connection()->table('s_jabatan')->get();
     }
 }

@@ -13,6 +13,9 @@ class daftar_menu extends Model
 
 	protected $fillable = ['id',
 						   'nama',
+						   'slug',
+						   'created_by',
+						   'updated_by',
 						   'group_menu_id'
 						];
 

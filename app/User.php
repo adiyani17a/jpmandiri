@@ -33,8 +33,8 @@ class User extends Authenticatable
         'jabatan_id',
         'image',
         'cabang_id',
+        'connection_id',
         'last_login',
-        'last_db',
     ];
 
     /**
@@ -54,6 +54,16 @@ class User extends Authenticatable
     public function cabang($value='')
     {
         return $this->belongsTo('App\setting\cabang','cabang_id','id');
+    }
+
+    public function list_db($value='')
+    {
+        return $this->belongsTo('App\setting\list_db','connection_id','id');
+    }
+
+    public function chat()
+    {
+        return $this->hasMany('App\setting\chat','user_id');
     }
 
     public function akses($fitur,$aksi){

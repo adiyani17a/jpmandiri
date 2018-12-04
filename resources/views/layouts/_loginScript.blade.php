@@ -12,6 +12,8 @@
 <script src="{{ asset('assets/Login_v1/js/main.js') }} "></script>
 <script type="text/javascript">
     $('.js-tilt').tilt({
-        scale: 1.1
+        scale: 1.2,
+        glare: true,
+    	maxGlare: .5
     })
 </script>
