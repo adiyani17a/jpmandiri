@@ -10,7 +10,9 @@
   <link rel="stylesheet" href="{{ asset('assets/plugin/izitoast/dist/css/iziToast.min.css') }} ">
   <link rel="stylesheet" href="{{ asset('assets/plugin/select2/dist/css/select2.min.css') }} ">
   <link rel="stylesheet" href="{{ asset('assets/plugin/select2-bootstrap4-theme-master/dist/select2-bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/plugin/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">
   <link rel="stylesheet" href="{{ asset('assets/plugin/scrollbar/jquery.custom-scrollbar.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/plugin/font-awesome/css/font-awesome.min.css')}}" />
   <!-- endinject -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} ">
@@ -20,7 +22,16 @@
     
     .chat{
       max-height: 400px;
+      height: 400px;
+      margin-bottom: 10px;
+      -webkit-transition: height 1s; /* For Safari 3.1 to 6.0 */
+      transition: height 1s;
     }  
+
+    .trans{
+      height: 0px;
+      bottom: -10px !important;
+    }
 
     .chat-box{
       border-top-right-radius: 3%;
@@ -36,7 +47,7 @@
 
     .chat-body{
       width: 100%;
-      height: 100%;
+      height: 80%;
     }
 
     .chat-icon{
@@ -61,6 +72,7 @@
       .chat{
         position: fixed;z-index: 1000000;bottom: 0px;right: 50px
       }
+
       .chat-box{
         width: 300px;height: 400px;
       }
@@ -397,9 +409,13 @@
     }
 
     .chat-text{
-      background: green;
-      width: 100px;
-      height: 100px;
+      background: ;
+      width: 100%;
+      height: 100%;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
     }
   </style>
 </head>

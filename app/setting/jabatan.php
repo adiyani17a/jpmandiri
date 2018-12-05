@@ -3,9 +3,10 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Config;
 class jabatan extends Model
 {
+	protected $connection = 'mysql';
     protected $table = 's_jabatan';
 	protected $primaryKey = 'id';
 	const CREATED_AT = 'created_at';
@@ -27,4 +28,23 @@ class jabatan extends Model
 	{
         return $this->hasMany('App\setting\hak_akses','jabatan_id');
 	}
+
+	public function changeConnection($name,$host,$database,$username,$password)
+	{
+		if ($name != null) {
+			Config::set('database.connections.'.$name.'', array(
+			    'driver'    => 'mysql',
+			    'host'      => $host,
+			    'database'  => $database,
+			    'username'  => $username,
+			    'password'  => $password,
+			    'charset'   => 'utf8',
+			    'collation' => 'utf8_unicode_ci',
+			    'prefix'    => '',
+			));
+			
+	    	$this->connection = $name;
+		}
+	}
+
 }

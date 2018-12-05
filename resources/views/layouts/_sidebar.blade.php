@@ -19,19 +19,40 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
+
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-        <span class="menu-title">UI Elements</span>
+      <a class="nav-link" data-toggle="collapse" href="#utility" aria-expanded="false" aria-controls="utility">
+        <span class="menu-title">Setting Utility</span>
         <i class="menu-arrow"></i>
-        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+        <i class="mdi mdi mdi-settings menu-icon"></i>
       </a>
-      <div class="collapse" id="ui-basic">
+      <div class="collapse" id="utility">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('group_menu') }}">Setting Group Menu</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('daftar_menu') }}">Setting Daftar Menu</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('hak_akses') }}">Setting Hak Akses</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('user') }}">Setting User</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('jabatan') }}">Setting Jabatan</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('cabang') }}">Setting Cabang</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('database') }}">Setting Database</a></li>
         </ul>
       </div>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#settingKeuangan" aria-expanded="false" aria-controls="settingKeuangan">
+        <span class="menu-title">Setting Keuangan</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-chart-areaspline menu-icon"></i>
+      </a>
+      <div class="collapse" id="settingKeuangan">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{ route('tambah_periode') }}">Setting Tambah Periode</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('periode') }}">Setting Periode</a></li>
+        </ul>
+      </div>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link" href="pages/icons/mdi.html">
         <span class="menu-title">Icons</span>

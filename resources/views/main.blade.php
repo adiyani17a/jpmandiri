@@ -15,14 +15,14 @@
       </div>
     </div>
   </div>
-  <div  style="position: fixed;z-index: 1000000;bottom: 25px;right: 50px">
-    <a onclick="" style="cursor: pointer;">
+  <div style="position: fixed;z-index: 1000000;bottom: 25px;right: 70px">
+    <a onclick="maximize()" style="cursor: pointer;">
       <img class="js-tilt chat-icon" style="width: 50px;height: 50px" src="{{ asset('assets/image/chat.png') }}">
     </a>
   </div>
-  <div class="chat">
+  <div class="chat trans">
     <div class="chat-box">
-      <div class="chat-head bg-gradient-success">
+      <div class="chat-head bg-gradient-success" style="cursor: pointer" onclick="minimize()">
         <h5 class="text-light" style="padding-top: 5px;padding-right: 5px;text-align: center;">CHAT JPMANDIRI</h5>
       </div>
       <div class="chat-body default-skin bg-light scroll " style="word-wrap: break-word;">
@@ -73,7 +73,12 @@
         </div>
       </div>
       <div class="chat-text">
-        <input type="text" name="">
+        <div class="input-group">
+          <textarea  style="font-size: 14px" type="text" class="form-control" placeholder="Ketikan Sesuatu" name=""></textarea>
+          <div class="input-group-append">
+            <button class="btn btn-info"><i class="fa fa-paper-plane"></i></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

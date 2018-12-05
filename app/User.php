@@ -68,7 +68,6 @@ class User extends Authenticatable
 
     public function akses($fitur,$aksi){
       // select * from  join  on = where ubah =true
-
         $cek = User::join('s_hak_akses', 'users.jabatan_id', '=', 's_hak_akses.jabatan_id')
                            ->where('daftar_menu', '=', $fitur)
                            ->where($aksi, '=', 1) 

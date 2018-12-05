@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class daftar_menu extends Model
 {
+	protected $connection = 'mysql';
     protected $table = 's_daftar_menu';
 	protected $primaryKey = 'id';
 	const CREATED_AT = 'created_at';
@@ -28,4 +29,21 @@ class daftar_menu extends Model
     {
         return $this->belongsTo('App\setting\grup_menu','group_menu_id','id');
     }
+
+    public function changeConnection($name,$host,$database,$username,$password)
+	{
+		if ($name != null) {
+			Config::set('database.connections.'.$name.'', array(
+			    'driver'    => 'mysql',
+			    'host'      => $host,
+			    'database'  => $database,
+			    'username'  => $username,
+			    'password'  => $password,
+			    'charset'   => 'utf8',
+			    'collation' => 'utf8_unicode_ci',
+			    'prefix'    => '',
+			));
+	    	$this->connection = $name;
+		}
+	}
 }
