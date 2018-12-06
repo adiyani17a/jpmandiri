@@ -1,7 +1,7 @@
 @extends('main')
-@section('title','Group Menu')
+@section('title','Kota')
 @section('content')
-@include('setting.group_menu.tambah_group_menu')
+@include('master.master_bersama.kota.tambah_kota')
 <style type="text/css">
   a:hover{
     color: hotpink !important;
@@ -15,33 +15,53 @@
         <li class="breadcrumb-item" style="color: white;">
           <i class="fa fa-home"></i>&nbsp;<a style="text-decoration: none !important;color: white" href="{{ url('/') }}">Home</a>
         </li>
-        <li class="breadcrumb-item" style="color: white">Setting</li>
-        <li class="breadcrumb-item  active" style="color: white" aria-current="page">Setting Group Menu</li>
+        <li class="breadcrumb-item" style="color: white">Master</li>
+        <li class="breadcrumb-item  active" style="color: white" aria-current="page">Master Kota</li>
       </ol>
     </nav>
   </div>
-	<div class="col-lg-12 grid-margin stretch-card">
+  <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body row">
         <div class="col-md-12 row title" style="padding-bottom: 20px;">
           <div class="col-md-4">
-            <span class="card-title"><b>Setting Group Menu</b></span>
+            <span class="card-title"><b>Master Kota</b></span>
           </div>
           <div class="pull-right col-md-8 " style="padding-right: 0px;">
             <button type="button" class="btn btn-info btn_modal btn-sm pull-right" data-toggle="modal" data-target="#modal_bispro"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Data</button>
           </div>
         </div>
-        <div class="table-responsive">
-	        <table id="table_data" class="table table-bordered" cellspacing="0" >
-            <thead class="bg-gradient-primary text-white">
-              <th>No</th>
-              <th>Nama</th>
-              <th>Keterangan</th>
-              <th>Aksi</th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table> 
+        <div class="form-group col-md-2" style="padding-bottom: 20px;">
+          <label>Filter Provinsi</label>
+          <select onchange="selectChange()" class="filter_provinsi select2 form-control form-control-sm">
+            <option value="">Semua - Provinsi</option>
+            @foreach($provinsi as $val)
+            <option value="{{ $val->id }}">{{ $val->nama }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="col-md-12 row">
+          <div class="form-group col-md-9 row">
+            <span>Menampilkan&nbsp;&nbsp;</span>
+            <div class="col-xs-3">
+              <select onchange="selectChange()" class="filter_showing select2 form-control form-control-sm">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+              </select>
+            </div>
+            <span>&nbsp;&nbsp;data</span>
+          </div>
+          <div class=" col-md-3 row" style="padding-bottom: 10px;">
+            <div class="col-md-12 col-xs-2 pull-right">
+              <input type="text" placeholder="Cari" value="" class="form-control filter_nama form-control-sm search-laravel" onkeyup="cari()">
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive table_append">
+          
         </div>
       </div>
     </div>
@@ -53,55 +73,43 @@
 <script type="text/javascript">
 var inputReady = 0;
 $(document).ready(function(){
-  $('#table_data').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-        url:'{{ route('datatable_group_menu') }}',
-        error:function(){
-          var table = $('#table_data').DataTable();
-          table.ajax.reload(null, false);
-        }
-    },
-    columnDefs: [
+  table_append();
+});
 
-            {
-               targets: 0 ,
-               className: 'tengah huruf_besar'
-            },
-            {
-               targets: 1 ,
-               className: 'huruf_besar'
-            },
-            {
-               targets: 2,
-               className: 'huruf_besar'
-            },
-            {
-               targets: 3,
-               className: 'tengah huruf_besar'
-            }
-          ],
-    columns: [
-      {data: 'id', name: 'id'},
-      {data: 'nama', name: 'nama'},
-      {data: 'keterangan', name: 'keterangan'},
-      {data: 'aksi', name: 'aksi'},
-    ]
+function table_append() {
+  $.ajax({
+      url:'{{ route('datatable_kota') }}?page='+page,
+      type:'get',
+      data:{provinsi_id: function() { return $('.filter_provinsi option:selected').val() },
+            filter_nama: function() { return $('.filter_nama').val() },
+            filter_showing: function() { return $('.filter_showing option:selected').val() }},
+      success:function(data){
+        $('.table_append').html(data);
+        $('.page-link').not(':last').not(':eq(0)').addClass('direct');
+        $('.page-link').eq(0).addClass('previous');
+        $('.page-link').last().addClass('next');
+        $('.page-link').removeAttr('href');
+      },
+      error:function(){
+        table_append();
+      } 
   });
-})
+}
+
+
 
 
 $('.btn_modal').click(function(){
   $('.clean').val('');
   $('.created_by').val('{{ Auth::user()->id }}');
   $('.updated_by').val('{{ Auth::user()->id }}');
+  $('.option').val('').trigger('change');
   inputReady = 1;
 })
 
 function edit(id) {
   $.ajax({
-      url:'{{ route('edit_group_menu') }}',
+      url:'{{ route('edit_kota') }}',
       type:'get',
       data:{id},
       dataType:'json',
@@ -112,6 +120,7 @@ function edit(id) {
           $('.updated_by').val(data.data.updated_by);
           $('.nama').val(data.data.nama);
           $('.keterangan').val(data.data.keterangan);
+          $('.provinsi_id').val(data.data.provinsi_id).trigger('change');
           $('.wajib').removeClass('error');
           $('#modal_bispro').modal('show'); 
           inputReady = 1;
@@ -167,7 +176,7 @@ $('.simpan').click(function(){
   if (inputReady == 1) {
     inputReady = 0;
     $.ajax({
-        url:'{{ route('simpan_group_menu') }}',
+        url:'{{ route('simpan_kota') }}',
         type:'post',
         data:$('.tabel_modal :input').serialize(),
         dataType:'json',
@@ -196,8 +205,7 @@ $('.simpan').click(function(){
             $('#modal_bispro').modal('hide');
           }
 
-          var table = $('#table_data').DataTable();
-          table.ajax.reload();
+          
           $('.clean').val('');
         },
         error:function(){
@@ -234,7 +242,7 @@ function hapus(id) {
             });
 
             $.ajax({
-                url:'{{ route('hapus_group_menu') }}',
+                url:'{{ route('hapus_kota') }}',
                 type:'get',
                 data:{id},
                 dataType:'json',
@@ -263,8 +271,7 @@ function hapus(id) {
                     });
                   }
 
-                  var table = $('#table_data').DataTable();
-                  table.ajax.reload();
+                  table_append();
                   $('.clean').val('');  
                 },
                 error:function(){

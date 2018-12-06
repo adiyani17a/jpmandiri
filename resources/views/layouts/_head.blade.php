@@ -109,6 +109,10 @@
         width: 100% !important;
       }
 
+      .search-laravel{
+        margin-left: 140px;
+      }
+
       .talk-bubble-odd {
         margin: 10px 0px;
         display: inline-block;
@@ -182,6 +186,10 @@
 
       .title .col-md-8{
         width: 40%;
+      }
+
+      .search-laravel{
+        margin-left: 0px;
       }
 
       /* CSS talk bubble */
@@ -567,5 +575,7 @@
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
     }
+
+
   </style>
 </head>

@@ -4,7 +4,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header bg-gradient-primary">
-        <h4 class="modal-title text-light">Form Daftar Menu</h4>
+        <h4 class="modal-title text-light">Form Kecamatan</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
@@ -21,20 +21,14 @@
               </td>
             </tr>
             <tr>
-              <td>Group Menu</td>
+              <td>Kota</td>
               <td>
-                <select name="group_menu_id" class="group_menu_id option select2 form-control form-control-sm">
-                  <option value="">Pilih - Grup</option>
-                  @foreach($group_menu as $val)
+                <select name="kota_id" class="kota_id option select2 form-control form-control-sm">
+                  <option value="">Pilih - Kota</option>
+                  @foreach($kota as $val)
                   <option value="{{ $val->id }}">{{ $val->nama }}</option>
                   @endforeach
                 </select>
-              </td>
-            </tr>
-            <tr>
-              <th>Keterangan</th>
-              <td>
-                <input type="text" name="keterangan" class="keterangan wajib clean form-control form-control-sm">
               </td>
             </tr>
           </table>

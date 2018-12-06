@@ -12,10 +12,10 @@
 
 <script type="text/javascript">
 "use strict";
+var page = 1;
 
 $(document).ready(function domReady() {
     $(".select2").select2({
-        placeholder: "Cari Menu",
        	width: '100%' 
 
     });
@@ -45,4 +45,39 @@ $('.wajib').focus(function(){
 	$(this).removeClass('error');
 })
 
+$('.option').change(function(){
+	var par = $(this).parents('td');
+	par.find('span').eq(0).removeClass('error');
+})
+
+function selectChange() {
+  page = 1;
+  table_append();
+}
+
+function cari() {
+  page = 1;
+  table_append();
+}
+
+$(document).on('click','.direct',function(){
+  page = $(this).text();
+  table_append();
+});
+
+$(document).on('click','.next',function(){
+  page = page*1 + 1;
+  table_append();
+});
+
+$(document).on('click','.previous',function(){
+  page = page*1 - 1;
+
+  table_append();
+});
+
+function filtering() {
+  var table = $('#table_data').DataTable();
+  table.ajax.reload(null, false);
+}
 </script>

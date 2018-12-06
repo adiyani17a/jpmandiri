@@ -45,6 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('setting/hapus_jabatan', 'setting\setting_controller@hapus_jabatan')->name('hapus_jabatan');
 		// SETTING CABANG
 		Route::get('setting/cabang', 'setting\setting_controller@cabang')->name('cabang');
+		Route::get('setting/edit_cabang', 'setting\setting_controller@edit_cabang')->name('edit_cabang');
+		Route::get('setting/datatable_cabang', 'setting\setting_controller@datatable_cabang')->name('datatable_cabang');
+		Route::post('setting/simpan_cabang', 'setting\setting_controller@simpan_cabang')->name('simpan_cabang');
+		Route::get('setting/hapus_cabang', 'setting\setting_controller@hapus_cabang')->name('hapus_cabang');
 		// SETTING DATABASE
 		Route::get('setting/database', 'setting\setting_controller@database')->name('database');
 	// SETTING KEUANGAN
@@ -52,6 +56,33 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('setting/tambah_periode', 'setting\setting_controller@tambah_periode')->name('tambah_periode');
 		// SETTING PERIODE
 		Route::get('setting/periode', 'setting\setting_controller@periode')->name('periode');
+	// MASTER BERSAMA
+		// MASTER PROVINSI
+		Route::get('master_bersama/provinsi', 'master\master_bersama_controller@provinsi')->name('provinsi');
+		Route::get('master/edit_provinsi', 'master\master_bersama_controller@edit_provinsi')->name('edit_provinsi');
+		Route::get('master/datatable_provinsi', 'master\master_bersama_controller@datatable_provinsi')->name('datatable_provinsi');
+		Route::post('master/simpan_provinsi', 'master\master_bersama_controller@simpan_provinsi')->name('simpan_provinsi');
+		Route::get('master/hapus_provinsi', 'master\master_bersama_controller@hapus_provinsi')->name('hapus_provinsi');
+		// MASTER KOTA
+		Route::get('master_bersama/kota', 'master\master_bersama_controller@kota')->name('kota');
+		Route::get('master/edit_kota', 'master\master_bersama_controller@edit_kota')->name('edit_kota');
+		Route::get('master/datatable_kota', 'master\master_bersama_controller@datatable_kota')->name('datatable_kota');
+		Route::post('master/simpan_kota', 'master\master_bersama_controller@simpan_kota')->name('simpan_kota');
+		Route::get('master/hapus_kota', 'master\master_bersama_controller@hapus_kota')->name('hapus_kota');
+		// MASTER KECAMATAN
+		Route::get('master_bersama/kecamatan', 'master\master_bersama_controller@kecamatan')->name('kecamatan');
+		Route::get('master/edit_kecamatan', 'master\master_bersama_controller@edit_kecamatan')->name('edit_kecamatan');
+		Route::get('master/datatable_kecamatan', 'master\master_bersama_controller@datatable_kecamatan')->name('datatable_kecamatan');
+		Route::post('master/simpan_kecamatan', 'master\master_bersama_controller@simpan_kecamatan')->name('simpan_kecamatan');
+		Route::get('master/hapus_kecamatan', 'master\master_bersama_controller@hapus_kecamatan')->name('hapus_kecamatan');
+		// MASTER DESA
+		Route::get('master_bersama/desa', 'master\master_bersama_controller@desa')->name('desa');
+		Route::get('master/edit_desa', 'master\master_bersama_controller@edit_desa')->name('edit_desa');
+		Route::get('master/datatable_desa', 'master\master_bersama_controller@datatable_desa')->name('datatable_desa');
+		Route::post('master/simpan_desa', 'master\master_bersama_controller@simpan_desa')->name('simpan_desa');
+		Route::get('master/hapus_desa', 'master\master_bersama_controller@hapus_desa')->name('hapus_desa');
+		// MASTER PERUSAHAAN
+		Route::get('master_bersama/perusahaan', 'master\master_bersama_controller@perusahaan')->name('perusahaan');
 
 		
 		

@@ -3,13 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 use App\setting\group_menu;
 use App\setting\daftar_menu;
 use App\setting\hak_akses;
-use App\User;
 use App\setting\jabatan;
 use App\setting\cabang;
 use App\setting\list_db;
+use App\master\provinsi;
+use App\master\kota;
+use App\master\kecamatan;
+use App\master\desa;
 use Config;
 use DB;
 use Auth;
@@ -107,7 +111,67 @@ class models extends Model
 		}
 	}
 
-	function log_history($ref,$keterangan,$table)
+	public function provinsi($name = null,$host = null,$database = null,$username = null,$password = null)
+	{	
+		if (Auth::check()) {
+			$nama     = Auth::user()->list_db->database;
+			$host     = Auth::user()->list_db->host;
+			$database = Auth::user()->list_db->database;
+			$username = Auth::user()->list_db->username;
+			$password = Auth::user()->list_db->password;
+
+			$provinsi = new provinsi();
+			$provinsi->changeConnection($database,$host,$database,$username,$password);
+			return $provinsi;
+		}
+	}
+
+	public function kota($name = null,$host = null,$database = null,$username = null,$password = null)
+	{	
+		if (Auth::check()) {
+			$nama     = Auth::user()->list_db->database;
+			$host     = Auth::user()->list_db->host;
+			$database = Auth::user()->list_db->database;
+			$username = Auth::user()->list_db->username;
+			$password = Auth::user()->list_db->password;
+
+			$kota = new kota();
+			$kota->changeConnection($database,$host,$database,$username,$password);
+			return $kota;
+		}
+	}
+
+	public function kecamatan($name = null,$host = null,$database = null,$username = null,$password = null)
+	{	
+		if (Auth::check()) {
+			$nama     = Auth::user()->list_db->database;
+			$host     = Auth::user()->list_db->host;
+			$database = Auth::user()->list_db->database;
+			$username = Auth::user()->list_db->username;
+			$password = Auth::user()->list_db->password;
+
+			$kecamatan = new kecamatan();
+			$kecamatan->changeConnection($database,$host,$database,$username,$password);
+			return $kecamatan;
+		}
+	}
+
+	public function desa($name = null,$host = null,$database = null,$username = null,$password = null)
+	{	
+		if (Auth::check()) {
+			$nama     = Auth::user()->list_db->database;
+			$host     = Auth::user()->list_db->host;
+			$database = Auth::user()->list_db->database;
+			$username = Auth::user()->list_db->username;
+			$password = Auth::user()->list_db->password;
+
+			$desa = new desa();
+			$desa->changeConnection($database,$host,$database,$username,$password);
+			return $desa;
+		}
+	}
+
+	public function log_history($ref,$keterangan,$table)
 	{
 		if (Auth::check()) {
 
@@ -132,15 +196,6 @@ class models extends Model
 								'updated_by' => Auth::user()->name,
 								'updated_by' => Auth::user()->name,
 					  		   ]);
-		}
-	}
-
-	public function akses($nama_fitur,$jenis)
-	{
-		if (Auth::check()) {
-			if (Auth::user()->akses($nama_fitur,$jenis) == false) {
-				return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
-			}
 		}
 	}
 }

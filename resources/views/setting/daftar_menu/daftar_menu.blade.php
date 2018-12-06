@@ -114,6 +114,7 @@ function edit(id) {
       dataType:'json',
       success:function(data){
         if (data.status == 1) {
+          $('.clean').val('');
           $('.id').val(data.data.id);
           $('.updated_by').val(data.data.updated_by);
           $('.nama').val(data.data.nama);

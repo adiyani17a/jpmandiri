@@ -28,13 +28,13 @@
       </a>
       <div class="collapse" id="utility">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="{{ route('group_menu') }}">Setting Group Menu</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('daftar_menu') }}">Setting Daftar Menu</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('hak_akses') }}">Setting Hak Akses</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('user') }}">Setting User</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('jabatan') }}">Setting Jabatan</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('cabang') }}">Setting Cabang</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('database') }}">Setting Database</a></li>
+          @if (Auth::user()->akses('setting group menu','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('group_menu') }}">Setting Group Menu</a></li>@endif
+          @if (Auth::user()->akses('setting daftar menu','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('daftar_menu') }}">Setting Daftar Menu</a></li>@endif
+          @if (Auth::user()->akses('setting hak akses','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('hak_akses') }}">Setting Hak Akses</a></li>@endif
+          @if (Auth::user()->akses('setting user','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('user') }}">Setting User</a></li>@endif
+          @if (Auth::user()->akses('setting jabatan','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('jabatan') }}">Setting Jabatan</a></li>@endif
+          @if (Auth::user()->akses('setting cabang','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('cabang') }}">Setting Cabang</a></li>@endif
+          @if (Auth::user()->akses('setting database','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('database') }}">Setting Database</a></li>@endif
         </ul>
       </div>
     </li>
@@ -47,24 +47,36 @@
       </a>
       <div class="collapse" id="settingKeuangan">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="{{ route('tambah_periode') }}">Setting Tambah Periode</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('periode') }}">Setting Periode</a></li>
+          @if (Auth::user()->akses('setting tambah periode','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('tambah_periode') }}">Setting Tambah Periode</a></li>@endif
+          @if (Auth::user()->akses('setting periode','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('periode') }}">Setting Periode</a></li>@endif
         </ul>
       </div>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="pages/icons/mdi.html">
-        <span class="menu-title">Icons</span>
-        <i class="mdi mdi-contacts menu-icon"></i>
+      <a class="nav-link" data-toggle="collapse" href="#master_bersama" aria-expanded="false" aria-controls="master_bersama">
+        <span class="menu-title">Master Bersama</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-adjust menu-icon"></i>
       </a>
+      <div class="collapse" id="master_bersama">
+        <ul class="nav flex-column sub-menu">
+             @if (Auth::user()->akses('master provinsi','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('provinsi') }}">Master Provinsi</a></li>@endif
+             @if (Auth::user()->akses('master kota','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kota') }}">Master Kota</a></li>@endif
+             @if (Auth::user()->akses('master kecamatan','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kecamatan') }}">Master Kecamatan</a></li>@endif
+             @if (Auth::user()->akses('master desa','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('desa') }}">Master Desa</a></li>@endif
+             @if (Auth::user()->akses('master perusahaan','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('perusahaan') }}">Master Perusahaan</a></li>@endif
+        </ul>
+      </div>
     </li>
+
     <li class="nav-item">
       <a class="nav-link" href="pages/forms/basic_elements.html">
         <span class="menu-title">Forms</span>
         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
       </a>
     </li>
+
     <li class="nav-item">
       <a class="nav-link" href="pages/charts/chartjs.html">
         <span class="menu-title">Charts</span>

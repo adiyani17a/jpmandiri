@@ -82,12 +82,13 @@ class setting_controller extends Controller
 
 	public function simpan_group_menu(Request $req)
 	{
-		DB::beginTransaction();
-		if (Auth::user()->akses('setting group menu','simpan') == false) {
+		if (Auth::user()->akses('setting group menu','tambah') == false) {
 			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 		}
+		$group_menu = $this->model->group_menu();
+
 		try {
-			$group_menu = $this->model->group_menu();
+			DB::connection(Auth::user()->list_db->database)->beginTransaction();
 			$input = $req->all();
 			unset($input['_token']);
 			$id = $this->model->group_menu()->max('id')+1;
@@ -96,16 +97,16 @@ class setting_controller extends Controller
 				$input['id'] = $id;
 				$group_menu->create($input);
 				$log_history = $this->model->log_history($id,'simpan group menu','s_group_menu');
-				DB::commit();
+				DB::connection(Auth::user()->list_db->database)->commit();
 				return response()->json(['status'=>1,'pesan'=>'Data Berhasil Disimpan']);
 			}else{
 				$group_menu->where('id',$req->id)->update($input);
 				$log_history = $this->model->log_history($req->id,'Update group menu','s_group_menu');
-				DB::commit();
+				DB::connection(Auth::user()->list_db->database)->commit();
 				return response()->json(['status'=>2,'pesan'=>'Data Berhasil Diupdate']);
 			}
 		} catch (Exception $e) {
-			DB::rollBack();
+			DB::connection(Auth::user()->list_db->database)->rollBack();
 			dd($e);
 		}
 	}
@@ -173,12 +174,14 @@ class setting_controller extends Controller
 
 	public function simpan_daftar_menu(Request $req)
 	{
-		DB::beginTransaction();
-		if (Auth::user()->akses('setting daftar menu','simpan') == false) {
+		if (Auth::user()->akses('setting daftar menu','tambah') == false) {
 			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 		}
+
+		$daftar_menu = $this->model->daftar_menu();
+
 		try {
-			$daftar_menu = $this->model->daftar_menu();
+			DB::connection(Auth::user()->list_db->database)->beginTransaction();
 			$input = $req->all();
 			unset($input['_token']);
 			$id = $this->model->daftar_menu()->max('id')+1;
@@ -206,8 +209,8 @@ class setting_controller extends Controller
 						'global'		=> 1,
 						'print'			=> 1,
 						'validasi'		=> 1,
-						'updated_by'	=> Auth::user()->name,
-						'created_by'	=> Auth::user()->name,
+						'updated_by'	=> Auth::user()->id,
+						'created_by'	=> Auth::user()->id,
 					);
 						
 					if ($jabatan[$i]->id == 1) {
@@ -225,7 +228,8 @@ class setting_controller extends Controller
 					}
 				}
 
-				DB::commit();
+				DB::connection(Auth::user()->list_db->database)->commit();
+				
 				return response()->json(['status'=>1,'pesan'=>'Data Berhasil Disimpan']);
 			}else{
 				$daftar_menu->where('id',$req->id)->update($input);
@@ -233,13 +237,14 @@ class setting_controller extends Controller
 				$this->model->hak_akses()->where('daftar_menu_id',$req->id)->update([
 																						'daftar_menu'=>$input['nama'],
 																					]);
-				DB::commit();
+				DB::connection(Auth::user()->list_db->database)->commit();
+				
 				return response()->json(['status'=>2,'pesan'=>'Data Berhasil Diupdate']);
 			}
 
 
 		} catch (Exception $e) {
-			DB::rollBack();
+			DB::connection(Auth::user()->list_db->database)->rollBack();
 			dd($e);
 		}
 	}
@@ -252,7 +257,7 @@ class setting_controller extends Controller
 		}
 		try {
 			$delete = $this->model->daftar_menu()->where('id',$req->id)->delete();
-			$log_history = $this->model->log_history($id,'hapus daftar menu','s_daftar_menu');
+			$log_history = $this->model->log_history($req->id,'hapus daftar menu','s_daftar_menu');
 			DB::commit();
 			return response()->json(['status'=>1,'pesan'=>'Data berhasil dihapus']);
 		} catch (Exception $e) {
@@ -280,9 +285,10 @@ class setting_controller extends Controller
 
 	public function centang(request $req)
 	{
-		if (Auth::user()->akses('setting hak akses','simpan') == false) {
+		if (Auth::user()->akses('setting hak akses','tambah') == false) {
 			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 		}
+
 		if (isset($req->aktif)) {
 		  if ($req->aktif == 'true') {
 		    $aktif = 1;
@@ -295,7 +301,7 @@ class setting_controller extends Controller
 		                      'aktif' =>$aktif
 		                    ]);
 
-		  $log_history = $this->model->log_history($id,'rubah hak akses aktif','s_hak_akses');
+		  $log_history = $this->model->log_history(0,'rubah hak akses aktif','s_hak_akses');
 		}
 
 		if (isset($req->tambah)) {
@@ -310,7 +316,7 @@ class setting_controller extends Controller
 		                      'tambah' =>$tambah
 		                    ]);
 
-		  $log_history = $this->model->log_history($id,'rubah hak akses tambah','s_hak_akses');
+		  $log_history = $this->model->log_history(0,'rubah hak akses tambah','s_hak_akses');
 		}      
 
 		if (isset($req->ubah)) {
@@ -325,7 +331,7 @@ class setting_controller extends Controller
 		                      'ubah' =>$ubah
 		                    ]);
 
-		  $log_history = $this->model->log_history($id,'rubah hak akses ubah','s_hak_akses');
+		  $log_history = $this->model->log_history(0,'rubah hak akses ubah','s_hak_akses');
 		}  
 
 		if (isset($req->cabang)) {
@@ -340,7 +346,7 @@ class setting_controller extends Controller
 		                      'cabang' =>$cabang
 		                    ]);
 
-		  $log_history = $this->model->log_history($id,'rubah hak akses cabang','s_hak_akses');
+		  $log_history = $this->model->log_history(0,'rubah hak akses cabang','s_hak_akses');
 		}  
 
 		if (isset($req->global)) {
@@ -354,7 +360,7 @@ class setting_controller extends Controller
 		                    ->update([
 		                      'global' =>$global
 		                    ]);
-		  $log_history = $this->model->log_history($id,'rubah hak akses cabang','s_hak_akses');
+		  $log_history = $this->model->log_history(0,'rubah hak akses cabang','s_hak_akses');
 		}  
 
 		if (isset($req->print)) {
@@ -368,7 +374,7 @@ class setting_controller extends Controller
 		                    ->update([
 		                      'print' =>$print
 		                    ]);
-		  $log_history = $this->model->log_history($id,'rubah hak akses print','s_hak_akses');
+		  $log_history = $this->model->log_history(0,'rubah hak akses print','s_hak_akses');
 		} 
 
 		if (isset($req->hapus)) {
@@ -382,7 +388,7 @@ class setting_controller extends Controller
 		                    ->update([
 		                      'hapus' =>$hapus
 		                    ]);
-		  $log_history = $this->model->log_history($id,'rubah hak akses hapus','s_hak_akses');
+		  $log_history = $this->model->log_history(0,'rubah hak akses hapus','s_hak_akses');
 		}
 
 		if (isset($req->validasi)) {
@@ -396,7 +402,7 @@ class setting_controller extends Controller
 		                    ->update([
 		                      'validasi' =>$validasi
 		                    ]);
-		  $log_history = $this->model->log_history($id,'rubah hak akses validasi','s_hak_akses');
+		  $log_history = $this->model->log_history(0,'rubah hak akses validasi','s_hak_akses');
 		}
 
 		return response()->json(['status' => 1]);
@@ -415,7 +421,6 @@ class setting_controller extends Controller
 			if (Auth::user()->akses('setting jabatan','aktif') == false) {
 				return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 			}
-			$this->model->akses('setting jabatan','aktif');
 			return view('setting.jabatan.jabatan');
 		}
 	}
@@ -460,31 +465,31 @@ class setting_controller extends Controller
 
 	public function simpan_jabatan(Request $req)
 	{
-		if (Auth::user()->akses('setting jabatan','simpan') == false) {
+		if (Auth::user()->akses('setting jabatan','tambah') == false) {
 			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 		}
 
-		DB::beginTransaction();
+		$jabatan = $this->model->jabatan();
+
 		try {
-			$this->model->akses('setting jabatan','tambah');
-			$jabatan = $this->model->jabatan();
+			DB::connection(Auth::user()->list_db->database)->beginTransaction();
 			$input = $req->all();
 			unset($input['_token']);
 			$id = $this->model->jabatan()->max('id')+1;
-
 			if ($req->id == null or $req->id == '') {
 				$input['id'] = $id;
 				$jabatan->create($input);
 				$log_history = $this->model->log_history($id,'simpan jabatan','s_jabatan');
-				$daftar_menu = $this->model->daftar_menu();
+				$daftar_menu = $this->model->daftar_menu()->get();
 				for ($i=0; $i < count($daftar_menu); $i++) { 
-					$daftar_menu
-					$daftar_menu = array(
-									'id'			=> $i+1,
-									'dt'			=> $i+1,
-									'jabatan_id'	=> $jabatan[$i]->id,
-									'daftar_menu'	=> $input['nama'],
-									'daftar_menu_id'=> $id,
+					// $daftar_menu
+					$id1 = $this->model->hak_akses()->max('id')+1;
+					$save = array(
+									'id'			=> $id1,
+									'dt'			=> $id,
+									'jabatan_id'	=> $id,
+									'daftar_menu'	=> $daftar_menu[$i]->nama,
+									'daftar_menu_id'=> $daftar_menu[$i]->id,
 									'aktif'			=> 1,
 									'tambah'		=> 0,
 									'ubah'			=> 0,
@@ -493,21 +498,22 @@ class setting_controller extends Controller
 									'global'		=> 0,
 									'print'			=> 0,
 									'validasi'		=> 0,
-									'updated_by'	=> Auth::user()->name,
-									'created_by'	=> Auth::user()->name,
+									'updated_by'	=> Auth::user()->id,
+									'created_by'	=> Auth::user()->id,
 								);
+					$hak_akses = $this->model->hak_akses()->create($save);
 				}
 
-				DB::commit();
+				DB::connection(Auth::user()->list_db->database)->commit();
 				return response()->json(['status'=>1,'pesan'=>'Data Berhasil Disimpan']);
 			}else{
 				$jabatan->where('id',$req->id)->update($input);
 				$log_history = $this->model->log_history($req->id,'Update jabatan','s_jabatan');
-				DB::commit();
+				DB::connection(Auth::user()->list_db->database)->commit();
 				return response()->json(['status'=>2,'pesan'=>'Data Berhasil Diupdate']);
 			}
 		} catch (Exception $e) {
-			DB::rollBack();
+			DB::connection(Auth::user()->list_db->database)->rollBack();
 			dd($e);
 		}
 	}
@@ -519,7 +525,6 @@ class setting_controller extends Controller
 		}
 		DB::beginTransaction();
 		try {
-			$this->model->akses('setting jabatan','hapus');
 			$delete = $this->model->jabatan()->where('id',$req->id)->delete();
 			$log_history = $this->model->log_history($req->id,'Hapus jabatan','s_group_menu');
 			DB::commit();
@@ -533,7 +538,92 @@ class setting_controller extends Controller
 	// CABANG
 	public function cabang()
 	{
-		# code...
+		if (Auth::check()) {
+			if (Auth::user()->akses('setting group menu','aktif') == false) {
+				return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+			}
+			return view('setting.cabang.cabang');
+		}
+	}
+	
+	public function datatable_cabang(Request $req)
+	{
+		$data = $this->model->cabang()->take(5000)->get();
+		// return $data;
+	    $data = collect($data);
+        return Datatables::of($data)
+	                      ->addColumn('aksi', function ($data) {
+	                        return  '<div class="btn-group">'.
+	                                 '<button type="button" onclick="edit(\''.$data->id.'\')" class="btn btn-info btn-sm" title="edit">'.
+	                                 '<label class="fa fa-pencil"></label></button>'.
+	                                 '<button type="button" onclick="hapus(\''.$data->id.'\')" class="btn btn-danger btn-sm" title="hapus">'.
+	                                 '<label class="fa fa-trash"></label></button>'.
+	                                '</div>';
+	                      })
+	                      ->addColumn('none', function ($data) {
+	                          return '-';
+	                      })
+	                      ->rawColumns(['aksi', 'none'])
+		                  ->addIndexColumn()
+	                      ->make(true);
+	}
+
+	public function edit_cabang(Request $req)
+	{
+		if (Auth::user()->akses('setting group menu','ubah') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		$data = $this->model->cabang()->find($req->id);
+
+		return response()->json(['status'=>1,'data'=>$data]);
+	}
+
+	public function simpan_cabang(Request $req)
+	{
+		if (Auth::user()->akses('setting group menu','tambah') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		$cabang = $this->model->cabang();
+
+		try {
+			DB::connection(Auth::user()->list_db->database)->beginTransaction();
+			$input = $req->all();
+			unset($input['_token']);
+			$id = $this->model->cabang()->max('id')+1;
+
+			if ($req->id == null or $req->id == '') {
+				$input['id'] = $id;
+				$cabang->create($input);
+				$log_history = $this->model->log_history($id,'simpan group menu','s_cabang');
+				DB::connection(Auth::user()->list_db->database)->commit();
+				return response()->json(['status'=>1,'pesan'=>'Data Berhasil Disimpan']);
+			}else{
+				$cabang->where('id',$req->id)->update($input);
+				$log_history = $this->model->log_history($req->id,'Update group menu','s_cabang');
+				DB::connection(Auth::user()->list_db->database)->commit();
+				return response()->json(['status'=>2,'pesan'=>'Data Berhasil Diupdate']);
+			}
+		} catch (Exception $e) {
+			DB::connection(Auth::user()->list_db->database)->rollBack();
+			dd($e);
+		}
+	}
+
+	public function hapus_cabang(Request $req)
+	{
+		DB::beginTransaction();
+		if (Auth::user()->akses('setting group menu','hapus') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		try {
+			$delete = $this->model->cabang()->where('id',$req->id)->delete();
+			$log_history = $this->model->log_history($req->id,'Hapus group menu','s_group_menu');
+			DB::commit();
+			return response()->json(['status'=>1,'pesan'=>'Data berhasil dihapus']);
+		} catch (Exception $e) {
+			DB::rollBack();
+			return response()->json(['status'=>0,'pesan'=>'Data Tidak Bisa Dihapus']);
+		}
 	}
 
 	// DATABASE
