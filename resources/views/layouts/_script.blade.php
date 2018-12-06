@@ -16,7 +16,8 @@
 $(document).ready(function domReady() {
     $(".select2").select2({
         placeholder: "Cari Menu",
-        theme: 'bootstrap4'
+       	width: '100%' 
+
     });
 
     $('.js-tilt').tilt({
@@ -39,4 +40,9 @@ function minimize() {
 function maximize() {
 	$('.chat').removeClass('trans');
 }
+
+$('.wajib').focus(function(){
+	$(this).removeClass('error');
+})
+
 </script>

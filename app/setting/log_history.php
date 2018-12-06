@@ -3,6 +3,7 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
+use Config;
 
 class log_history extends Model
 {
@@ -17,6 +18,7 @@ class log_history extends Model
 						   'cabang_id',
 						   'user_id',
 						   'keterangan',
+						   'table_name',
 						   'created_by',
 						   'updated_by',
 						];

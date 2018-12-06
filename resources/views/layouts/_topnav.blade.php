@@ -7,18 +7,13 @@
     <div class="search-field d-none d-md-block" w>
       <form class="d-flex align-items-center h-100" action="{{ route('cari_menu') }}" id="search_menu">
         <div class="input-group">
-          <div class="input-group-prepend bg-transparent">
-              <i class="input-group-text border-0 mdi mdi-magnify"></i>                
-          </div>
           @php
             $menu = get_menu();
           @endphp
-          <select class="form-control select2" onselect="document.getElementById('search_menu').submit();">
-            <option value="">Cari Menu</option>
-            @foreach ($menu as $i => $m)
-              <option value="{{ $m->slug }}">{{ $m->nama }}</option>
-            @endforeach
-          </select>
+          <div class="input-group-prepend bg-transparent">
+              <i class="input-group-text border-0 mdi mdi-magnify"></i>                
+          </div>
+          <input type="text" class="form-control bg-transparent border-0" placeholder="Cari Menu">
         </div>
       </form>
     </div>

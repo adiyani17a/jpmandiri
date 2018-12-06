@@ -4,7 +4,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header bg-gradient-primary">
-        <h4 class="modal-title text-light">Form Group Menu</h4>
+        <h4 class="modal-title text-light">Form Jabatan</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
@@ -18,12 +18,6 @@
                 <input type="hidden" name="created_by" class="created_by" >
                 <input type="hidden" name="updated_by" class="updated_by" >
                 {{ csrf_field() }}
-              </td>
-            </tr>
-            <tr>
-              <th>Keterangan</th>
-              <td>
-                <input type="text" name="keterangan" class="keterangan wajib clean form-control huruf_besar">
               </td>
             </tr>
           </table>

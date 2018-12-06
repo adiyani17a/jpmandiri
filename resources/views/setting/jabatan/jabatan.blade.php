@@ -1,7 +1,7 @@
 @extends('main')
-@section('title','Group Menu')
+@section('title','Jabatan')
 @section('content')
-@include('setting.group_menu.tambah_group_menu')
+@include('setting.jabatan.tambah_jabatan')
 <style type="text/css">
   a:hover{
     color: hotpink !important;
@@ -16,7 +16,7 @@
           <i class="fa fa-home"></i>&nbsp;<a style="text-decoration: none !important;color: white" href="{{ url('/') }}">Home</a>
         </li>
         <li class="breadcrumb-item" style="color: white">Setting</li>
-        <li class="breadcrumb-item  active" style="color: white" aria-current="page">Setting Group Menu</li>
+        <li class="breadcrumb-item  active" style="color: white" aria-current="page">Setting Jabatan</li>
       </ol>
     </nav>
   </div>
@@ -25,7 +25,7 @@
       <div class="card-body">
         <div class="col-md-12 row title" style="padding-bottom: 20px;">
           <div class="col-md-4">
-            <span class="card-title"><b>Setting Group Menu</b></span>
+            <span class="card-title"><b>Setting Jabatan</b></span>
           </div>
           <div class="pull-right col-md-8 " style="padding-right: 0px;">
             <button type="button" class="btn btn-info btn_modal btn-sm pull-right" data-toggle="modal" data-target="#modal_bispro"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Data</button>
@@ -36,7 +36,6 @@
             <thead class="bg-gradient-primary text-white">
               <th>No</th>
               <th>Nama</th>
-              <th>Keterangan</th>
               <th>Aksi</th>
             </thead>
             <tbody>
@@ -57,7 +56,7 @@ $(document).ready(function(){
     processing: true,
     serverSide: true,
     ajax: {
-        url:'{{ route('datatable_group_menu') }}',
+        url:'{{ route('datatable_jabatan') }}',
         error:function(){
           var table = $('#table_data').DataTable();
           table.ajax.reload(null, false);
@@ -75,17 +74,12 @@ $(document).ready(function(){
             },
             {
                targets: 2,
-               className: 'huruf_besar'
-            },
-            {
-               targets: 3,
                className: 'tengah huruf_besar'
-            }
+            },
           ],
     columns: [
       {data: 'id', name: 'id'},
       {data: 'nama', name: 'nama'},
-      {data: 'keterangan', name: 'keterangan'},
       {data: 'aksi', name: 'aksi'},
     ]
   });
@@ -101,7 +95,7 @@ $('.btn_modal').click(function(){
 
 function edit(id) {
   $.ajax({
-      url:'{{ route('edit_group_menu') }}',
+      url:'{{ route('edit_jabatan') }}',
       type:'get',
       data:{id},
       dataType:'json',
@@ -166,7 +160,7 @@ $('.simpan').click(function(){
   if (inputReady == 1) {
     inputReady = 0;
     $.ajax({
-        url:'{{ route('simpan_group_menu') }}',
+        url:'{{ route('simpan_jabatan') }}',
         type:'post',
         data:$('.tabel_modal :input').serialize(),
         dataType:'json',
@@ -233,7 +227,7 @@ function hapus(id) {
             });
 
             $.ajax({
-                url:'{{ route('hapus_group_menu') }}',
+                url:'{{ route('hapus_jabatan') }}',
                 type:'get',
                 data:{id},
                 dataType:'json',

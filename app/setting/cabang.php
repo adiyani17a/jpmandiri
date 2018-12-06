@@ -3,7 +3,7 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Config;
 class cabang extends Model
 {
 	protected $connection = 'mysql';

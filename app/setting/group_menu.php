@@ -3,11 +3,12 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
+use Config;
 
 class group_menu extends Model
 {
 	protected $connection = 'mysql';
-    protected $table = 's_grup_menu';
+    protected $table = 's_group_menu';
 	protected $primaryKey = 'id';
 	const CREATED_AT = 'created_at';
 	const UPDATED_AT = 'updated_at';
@@ -15,6 +16,9 @@ class group_menu extends Model
 	protected $fillable = [
 						   'id',
 						   'nama',
+						   'keterangan',
+						   'created_by',
+						   'updated_by',
 						];
 
 	public function daftar_menu()
@@ -35,6 +39,7 @@ class group_menu extends Model
 			    'collation' => 'utf8_unicode_ci',
 			    'prefix'    => '',
 			));
+			
 	    	$this->connection = $name;
 		}
 	}

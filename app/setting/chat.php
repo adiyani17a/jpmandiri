@@ -3,6 +3,7 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
+use Config;
 
 class chat extends Model
 {

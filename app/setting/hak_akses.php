@@ -3,6 +3,7 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
+use Config;
 
 class hak_akses extends Model
 {
@@ -16,6 +17,7 @@ class hak_akses extends Model
 						   'dt',
 						   'jabatan_id',
 						   'daftar_menu',
+						   'daftar_menu_id',
 						   'aktif',
 						   'tambah',
 						   'ubah',
@@ -28,9 +30,14 @@ class hak_akses extends Model
 						   'created_by'
 						];
 
-	public function list_db()
+	public function jabatan()
     {
         return $this->belongsTo('App\setting\jabatan','jabatan_id','id');
+    }
+
+    public function daftar_menus()
+    {
+        return $this->belongsTo('App\setting\daftar_menu','daftar_menu','nama');
     }
 
     public function changeConnection($name,$host,$database,$username,$password)

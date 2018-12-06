@@ -3,6 +3,7 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
+use Config;
 
 class daftar_menu extends Model
 {
@@ -14,7 +15,7 @@ class daftar_menu extends Model
 
 	protected $fillable = ['id',
 						   'nama',
-						   'slug',
+						   'keterangan',
 						   'created_by',
 						   'updated_by',
 						   'group_menu_id'
@@ -25,9 +26,9 @@ class daftar_menu extends Model
         return $this->hasMany('App\setting\hak_akses','daftar_menu');
 	}
 
-	public function grup_menu()
+	public function group_menu()
     {
-        return $this->belongsTo('App\setting\grup_menu','group_menu_id','id');
+        return $this->belongsTo('App\setting\group_menu','group_menu_id','id');
     }
 
     public function changeConnection($name,$host,$database,$username,$password)
