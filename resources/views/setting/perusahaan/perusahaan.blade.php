@@ -1,7 +1,7 @@
 @extends('main')
-@section('title','Kecamatan')
+@section('title','perusahaan')
 @section('content')
-@include('master.master_bersama.kecamatan.tambah_kecamatan')
+@include('setting.perusahaan.tambah_perusahaan')
 <style type="text/css">
   a:hover{
     color: hotpink !important;
@@ -16,52 +16,37 @@
           <i class="fa fa-home"></i>&nbsp;<a style="text-decoration: none !important;color: white" href="{{ url('/') }}">Home</a>
         </li>
         <li class="breadcrumb-item" style="color: white">Master</li>
-        <li class="breadcrumb-item  active" style="color: white" aria-current="page">Master Kecamatan</li>
+        <li class="breadcrumb-item  active" style="color: white" aria-current="page">Master Perusahaan</li>
       </ol>
     </nav>
   </div>
 	<div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body row">
+      <div class="card-body">
         <div class="col-md-12 row title" style="padding-bottom: 20px;">
           <div class="col-md-4">
-            <span class="card-title"><b>Master Kecamatan</b></span>
+            <span class="card-title"><b>Master Perusahaan</b></span>
           </div>
           <div class="pull-right col-md-8 " style="padding-right: 0px;">
-            <button type="button" class="btn btn-info btn_modal btn-sm pull-right" data-toggle="modal" data-target="#modal_bispro"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Data</button>
+            <label class="switch pull-right">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
           </div>
         </div>
-        <div class="form-group col-md-4" style="padding-bottom: 20px;">
-          <label>Filter Kota</label>
-          <select onchange="selectChange()" class="filter_kota select2 form-control form-control-sm">
-            <option value="">Semua - Kota</option>
-            @foreach($kota as $val)
-            <option value="{{ $val->id }}">{{ $val->nama }}</option>
-            @endforeach
-          </select>
-        </div>
-        <div class="col-md-12 row">
-          <div class="form-group col-md-9 row">
-            <span>Menampilkan&nbsp;&nbsp;</span>
-            <div class="col-xs-3">
-              <select onchange="selectChange()" class="filter_showing select2 form-control form-control-sm">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="1000">1000</option>
-              </select>
-            </div>
-            <span>&nbsp;&nbsp;data</span>
-          </div>
-          <div class=" col-md-3 row" style="padding-bottom: 10px;">
-            <div class="col-md-12 col-xs-2 pull-right">
-              <input type="text" placeholder="Cari" value="" class="form-control filter_nama form-control-sm search-laravel" onkeyup="cari()">
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive table_append">
-	        
+        <div class="table-responsive">
+          <table class="table tabel_modal">
+            <tr>
+              <th>Nama</th>
+              <td>
+                <input type="text" name="nama" class="nama form-control clean wajib huruf_besar">
+                <input type="hidden" name="id" class="id clean">
+                <input type="hidden" name="created_by" class="created_by" >
+                <input type="hidden" name="updated_by" class="updated_by" >
+                {{ csrf_field() }}
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -72,56 +57,26 @@
 @section('extra_script')
 <script type="text/javascript">
 var inputReady = 0;
-$(document).ready(function(){
-  table_append();
-});
-
-function table_append() {
-  $.ajax({
-      url:'{{ route('datatable_kecamatan') }}?page='+page,
-      type:'get',
-      data:{provinsi_id: function() { return $('.filter_provinsi option:selected').val() },
-            kota_id: function() { return $('.filter_kota option:selected').val() },
-            filter_nama: function() { return $('.filter_nama').val() },
-            filter_showing: function() { return $('.filter_showing option:selected').val() }},
-      success:function(data){
-        $('.table_append').html(data);
-        $('.page-link').not(':last').not(':eq(0)').addClass('direct');
-        $('.page-link').eq(0).addClass('previous');
-        $('.page-link').last().addClass('next');
-        $('.page-link').removeAttr('href');
-      },
-      error:function(){
-        table_append();
-      } 
-  });
-}
-
-
-
 
 $('.btn_modal').click(function(){
   $('.clean').val('');
   $('.created_by').val('{{ Auth::user()->id }}');
   $('.updated_by').val('{{ Auth::user()->id }}');
-  $('.option').val('').trigger('change');
   inputReady = 1;
 })
 
 function edit(id) {
   $.ajax({
-      url:'{{ route('edit_kecamatan') }}',
+      url:'{{ route('edit_perusahaan') }}',
       type:'get',
       data:{id},
       dataType:'json',
       success:function(data){
         if (data.status == 1) {
-          $('.clean').val('');
           $('.id').val(data.data.id);
           $('.updated_by').val(data.data.updated_by);
           $('.nama').val(data.data.nama);
           $('.keterangan').val(data.data.keterangan);
-          $('.kota_id').val(data.data.kota_id).trigger('change');
           $('.wajib').removeClass('error');
           $('#modal_bispro').modal('show'); 
           inputReady = 1;
@@ -177,7 +132,7 @@ $('.simpan').click(function(){
   if (inputReady == 1) {
     inputReady = 0;
     $.ajax({
-        url:'{{ route('simpan_kecamatan') }}',
+        url:'{{ route('simpan_perusahaan') }}',
         type:'post',
         data:$('.tabel_modal :input').serialize(),
         dataType:'json',
@@ -206,8 +161,8 @@ $('.simpan').click(function(){
             $('#modal_bispro').modal('hide');
           }
 
-          
-          table_append();
+          var table = $('#table_data').DataTable();
+          table.ajax.reload(null, false);
           $('.clean').val('');
         },
         error:function(){
@@ -244,7 +199,7 @@ function hapus(id) {
             });
 
             $.ajax({
-                url:'{{ route('hapus_kecamatan') }}',
+                url:'{{ route('hapus_perusahaan') }}',
                 type:'get',
                 data:{id},
                 dataType:'json',
@@ -273,7 +228,8 @@ function hapus(id) {
                     });
                   }
 
-                  table_append();
+                  var table = $('#table_data').DataTable();
+                  table.ajax.reload(null, false);
                   $('.clean').val('');  
                 },
                 error:function(){

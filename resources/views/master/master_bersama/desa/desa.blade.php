@@ -31,7 +31,7 @@
             <button type="button" class="btn btn-info btn_modal btn-sm pull-right" data-toggle="modal" data-target="#modal_bispro"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Data</button>
           </div>
         </div>
-        <div class="form-group col-md-2" style="padding-bottom: 20px;">
+        <div class="form-group col-md-4" style="padding-bottom: 20px;">
           <label>Filter Kecamatan</label>
           <select onchange="selectChange()" class="filter_kecamatan select2 form-control form-control-sm">
             <option value="">Semua - Kecamatan</option>
@@ -207,6 +207,7 @@ $('.simpan').click(function(){
           }
 
           
+          table_append();
           $('.clean').val('');
         },
         error:function(){

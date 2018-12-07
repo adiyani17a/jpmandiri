@@ -3,9 +3,12 @@
 namespace App\master;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Config;
 class kecamatan extends Model
 {
+	use SoftDeletes;
+	protected $dates = ['deleted_at'];
     protected $connection = 'mysql';
     protected $table = 'm_kecamatan';
 	protected $primaryKey = 'id';

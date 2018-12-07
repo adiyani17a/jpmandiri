@@ -33,8 +33,8 @@
           @if (Auth::user()->akses('setting hak akses','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('hak_akses') }}">Setting Hak Akses</a></li>@endif
           @if (Auth::user()->akses('setting user','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('user') }}">Setting User</a></li>@endif
           @if (Auth::user()->akses('setting jabatan','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('jabatan') }}">Setting Jabatan</a></li>@endif
-          @if (Auth::user()->akses('setting cabang','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('cabang') }}">Setting Cabang</a></li>@endif
           @if (Auth::user()->akses('setting database','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('database') }}">Setting Database</a></li>@endif
+          @if (Auth::user()->akses('setting perusahaan','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('perusahaan') }}">Setting Perusahaan</a></li>@endif
         </ul>
       </div>
     </li>
@@ -65,7 +65,8 @@
              @if (Auth::user()->akses('master kota','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kota') }}">Master Kota</a></li>@endif
              @if (Auth::user()->akses('master kecamatan','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kecamatan') }}">Master Kecamatan</a></li>@endif
              @if (Auth::user()->akses('master desa','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('desa') }}">Master Desa</a></li>@endif
-             @if (Auth::user()->akses('master perusahaan','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('perusahaan') }}">Master Perusahaan</a></li>@endif
+             
+             @if (Auth::user()->akses('master cabang','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('cabang') }}">Master Cabang</a></li>@endif
         </ul>
       </div>
     </li>

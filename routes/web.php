@@ -43,19 +43,21 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('setting/datatable_jabatan', 'setting\setting_controller@datatable_jabatan')->name('datatable_jabatan');
 		Route::post('setting/simpan_jabatan', 'setting\setting_controller@simpan_jabatan')->name('simpan_jabatan');
 		Route::get('setting/hapus_jabatan', 'setting\setting_controller@hapus_jabatan')->name('hapus_jabatan');
-		// SETTING CABANG
-		Route::get('setting/cabang', 'setting\setting_controller@cabang')->name('cabang');
-		Route::get('setting/edit_cabang', 'setting\setting_controller@edit_cabang')->name('edit_cabang');
-		Route::get('setting/datatable_cabang', 'setting\setting_controller@datatable_cabang')->name('datatable_cabang');
-		Route::post('setting/simpan_cabang', 'setting\setting_controller@simpan_cabang')->name('simpan_cabang');
-		Route::get('setting/hapus_cabang', 'setting\setting_controller@hapus_cabang')->name('hapus_cabang');
 		// SETTING DATABASE
 		Route::get('setting/database', 'setting\setting_controller@database')->name('database');
+		// setting PERUSAHAAN
+		Route::get('setting/perusahaan', 'setting\setting_controller@perusahaan')->name('perusahaan');
+		Route::get('setting/edit_perusahaan', 'setting\setting_controller@edit_perusahaan')->name('edit_perusahaan');
+		Route::get('setting/datatable_perusahaan', 'setting\setting_controller@datatable_perusahaan')->name('datatable_perusahaan');
+		Route::post('setting/simpan_perusahaan', 'setting\setting_controller@simpan_perusahaan')->name('simpan_perusahaan');
+		Route::get('setting/hapus_perusahaan', 'setting\setting_controller@hapus_perusahaan')->name('hapus_perusahaan');
 	// SETTING KEUANGAN
 		// SETTING TAMBAH PERIODE
 		Route::get('setting/tambah_periode', 'setting\setting_controller@tambah_periode')->name('tambah_periode');
 		// SETTING PERIODE
 		Route::get('setting/periode', 'setting\setting_controller@periode')->name('periode');
+
+
 	// MASTER BERSAMA
 		// MASTER PROVINSI
 		Route::get('master_bersama/provinsi', 'master\master_bersama_controller@provinsi')->name('provinsi');
@@ -81,8 +83,13 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('master/datatable_desa', 'master\master_bersama_controller@datatable_desa')->name('datatable_desa');
 		Route::post('master/simpan_desa', 'master\master_bersama_controller@simpan_desa')->name('simpan_desa');
 		Route::get('master/hapus_desa', 'master\master_bersama_controller@hapus_desa')->name('hapus_desa');
-		// MASTER PERUSAHAAN
-		Route::get('master_bersama/perusahaan', 'master\master_bersama_controller@perusahaan')->name('perusahaan');
+		
+		// SETTING CABANG
+		Route::get('master_bersama/cabang', 'master\master_bersama_controller@cabang')->name('cabang');
+		Route::get('master/edit_cabang', 'master\master_bersama_controller@edit_cabang')->name('edit_cabang');
+		Route::get('master/datatable_cabang', 'master\master_bersama_controller@datatable_cabang')->name('datatable_cabang');
+		Route::post('master/simpan_cabang', 'master\master_bersama_controller@simpan_cabang')->name('simpan_cabang');
+		Route::get('master/hapus_cabang', 'master\master_bersama_controller@hapus_cabang')->name('hapus_cabang');
 
 		
 		

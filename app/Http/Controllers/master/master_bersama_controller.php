@@ -437,4 +437,111 @@ class master_bersama_controller extends Controller
 			return response()->json(['status'=>0,'pesan'=>'Data Tidak Bisa Dihapus']);
 		}
 	}
+
+	// CABANG
+	public function cabang()
+	{
+		if (Auth::check()) {
+			if (Auth::user()->akses('master cabang','aktif') == false) {
+				return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+			}
+			$kota = $this->model->kota()->get();
+			return view('master.master_bersama.cabang.cabang',compact('kota'));
+		}
+	}
+	
+	public function datatable_cabang(Request $req)
+	{
+		$data = $this->model->cabang()->get();
+
+	    $data = collect($data);
+        return Datatables::of($data)
+	                      ->addColumn('aksi', function ($data) {
+	                        return  '<div class="btn-group">'.
+	                                 '<button type="button" onclick="edit(\''.$data->id.'\')" class="btn btn-info btn-xs" title="edit">'.
+	                                 '<label class="fa fa-pencil"></label></button>'.
+	                                 '<button type="button" onclick="hapus(\''.$data->id.'\')" class="btn btn-danger btn-xs" title="hapus">'.
+	                                 '<label class="fa fa-trash"></label></button>'.
+	                                '</div>';
+	                      })
+	                      ->addColumn('none', function ($data) {
+	                          return '-';
+	                      })
+	                      ->addColumn('kota', function ($data) {
+	                      	if ($data->kota != null) {
+	                          return $data->kota->nama;
+	                      	}
+	                      })->addColumn('create', function ($data) {
+	                      	if ($data->create != null) {
+	                          return $data->create->name;
+	                      	}
+	                      })
+	                      ->rawColumns(['aksi', 'none','kota','create'])
+		                  ->addIndexColumn()
+	                      ->make(true);
+	}
+
+	public function edit_cabang(Request $req)
+	{
+		if (Auth::user()->akses('master cabang','ubah') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		$data = $this->model->cabang()->find($req->id);
+
+		return response()->json(['status'=>1,'data'=>$data]);
+	}
+
+	public function simpan_cabang(Request $req)
+	{
+		if (Auth::user()->akses('master cabang','tambah') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		$cabang = $this->model->cabang();
+
+		try {
+			DB::connection(Auth::user()->list_db->database)->beginTransaction();
+			$input = $req->all();
+			unset($input['_token']);
+			$id = $this->model->cabang()->max('id')+1;
+
+			
+
+			if ($req->id == null or $req->id == '') {
+				$kode = $this->model->cabang()->where('kode',$input['kode'])->first();
+				if ($kode != null) {
+					return response()->json(['status'=>0,'pesan'=>'Kode Sudah Terpakai']);
+				}
+				$input['id'] = $id;
+				$cabang->create($input);
+				$log_history = $this->model->log_history($id,'simpan master cabang','s_cabang');
+				DB::connection(Auth::user()->list_db->database)->commit();
+				return response()->json(['status'=>1,'pesan'=>'Data Berhasil Disimpan']);
+			}else{
+				$cabang->where('id',$req->id)->update($input);
+				$log_history = $this->model->log_history($req->id,'Update master cabang','s_cabang');
+				DB::connection(Auth::user()->list_db->database)->commit();
+				return response()->json(['status'=>2,'pesan'=>'Data Berhasil Diupdate']);
+			}
+		} catch (Exception $e) {
+			DB::connection(Auth::user()->list_db->database)->rollBack();
+			dd($e);
+		}
+	}
+
+	public function hapus_cabang(Request $req)
+	{
+		DB::beginTransaction();
+		if (Auth::user()->akses('master cabang','hapus') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		try {
+			$delete = $this->model->cabang()->where('id',$req->id)->delete();
+			$log_history = $this->model->log_history($req->id,'Hapus master cabang','s_cabang');
+			DB::commit();
+			return response()->json(['status'=>1,'pesan'=>'Data berhasil dihapus']);
+		} catch (Exception $e) {
+			DB::rollBack();
+			return response()->json(['status'=>0,'pesan'=>'Data Tidak Bisa Dihapus']);
+		}
+	}
 }

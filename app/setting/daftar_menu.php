@@ -3,10 +3,13 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Config;
 
 class daftar_menu extends Model
 {
+	use SoftDeletes;
+	protected $dates = ['deleted_at'];
 	protected $connection = 'mysql';
     protected $table = 's_daftar_menu';
 	protected $primaryKey = 'id';

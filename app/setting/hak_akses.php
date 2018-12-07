@@ -3,10 +3,13 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Config;
 
 class hak_akses extends Model
 {
+	use SoftDeletes;
+	protected $dates = ['deleted_at'];
 	protected $connection = 'mysql';
     protected $table = 's_hak_akses';
 	protected $primaryKey = 'id';

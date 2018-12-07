@@ -80,4 +80,12 @@ function filtering() {
   var table = $('#table_data').DataTable();
   table.ajax.reload(null, false);
 }
+
+$(document).on('keypress','.hanya_angka',function (e) {
+ //if the letter is not digit then display error and don't type anything
+  if (e.which != 8 && e.which != 0 && e.which != 46 && (e.which < 48 || e.which > 57)) {
+    //display error message
+    return false;
+  }
+});
 </script>

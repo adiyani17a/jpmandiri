@@ -3,13 +3,17 @@
 namespace App\master;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Config;
-
 class desa extends Model
 {
+	use SoftDeletes;
+	protected $dates = ['deleted_at'];
     protected $connection = 'mysql';
     protected $table = 'm_desa';
 	protected $primaryKey = 'id';
+	
+
 	const CREATED_AT = 'created_at';
 	const UPDATED_AT = 'updated_at';
 

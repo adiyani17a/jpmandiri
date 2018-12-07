@@ -3,12 +3,16 @@
 namespace App\setting;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Config;
 class cabang extends Model
 {
+	use SoftDeletes;
 	protected $connection = 'mysql';
     protected $table = 's_cabang';
 	protected $primaryKey = 'id';
+	protected $dates = ['deleted_at'];
+	
 	const CREATED_AT = 'created_at';
 	const UPDATED_AT = 'updated_at';
 
@@ -27,6 +31,17 @@ class cabang extends Model
 	{
         return $this->hasMany('App\User','cabang_id');
 	}
+
+	public function kota()
+	{
+        return $this->belongsTo('App\master\kota','kota_id','id');
+	}
+
+	public function create()
+	{
+        return $this->belongsTo('App\user','created_by','id');
+	}
+
 
 	public function changeConnection($name,$host,$database,$username,$password)
 	{
