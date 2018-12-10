@@ -242,14 +242,14 @@ $('.simpan').click(function(){
   if (inputReady == 1) {
     // inputReady = 0;
     var formdata = new FormData();  
-    formdata = $('#simpan');
-    console.log(formdata);
     formdata.append( 'image', $('#chooseFile')[0].files[0]);
     $.ajax({
-        url:'{{ route('simpan_perusahaan') }}',
+        url:'{{ route('simpan_perusahaan') }}?id='+'1'+'&'+$('.tabel_modal :input').serialize(),
         type:'post',
         data:formdata,
         dataType:'json',
+        processData: false,
+        contentType: false,
         success:function(data){
           if (data.status == 0) {
             iziToast.warning({
