@@ -1,7 +1,7 @@
 @extends('main')
-@section('title','Desa')
+@section('title','Group Akun')
 @section('content')
-@include('master.master_bersama.desa.tambah_desa')
+@include('master.master_akuntansi.group_akun.tambah_group_akun')
 <style type="text/css">
   a:hover{
     color: hotpink !important;
@@ -15,53 +15,38 @@
         <li class="breadcrumb-item" style="color: white;">
           <i class="fa fa-home"></i>&nbsp;<a style="text-decoration: none !important;color: white" href="{{ url('/') }}">Home</a>
         </li>
-        <li class="breadcrumb-item" style="color: white">Master</li>
-        <li class="breadcrumb-item  active" style="color: white" aria-current="page">Master Desa</li>
+        <li class="breadcrumb-item" style="color: white">Setting</li>
+        <li class="breadcrumb-item  active" style="color: white" aria-current="page">Setting group_akun</li>
       </ol>
     </nav>
   </div>
 	<div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body row">
+      <div class="card-body">
         <div class="col-md-12 row title" style="padding-bottom: 20px;">
           <div class="col-md-4">
-            <span class="card-title"><b>Master Desa</b></span>
+            <span class="card-title"><b>Setting group_akun</b></span>
           </div>
           <div class="pull-right col-md-8 " style="padding-right: 0px;">
             <button type="button" class="btn btn-info btn_modal btn-sm pull-right" data-toggle="modal" data-target="#modal_bispro"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Data</button>
           </div>
         </div>
-        <div class="form-group col-md-4" style="padding-bottom: 20px;">
-          <label>Filter Kecamatan</label>
-          <select onchange="selectChange()" class="filter_kecamatan select2 form-control form-control-sm">
-            <option value="">Semua - Kecamatan</option>
-            @foreach($kecamatan as $val)
-            <option value="{{ $val->id }}">{{ $val->nama }}</option>
-            @endforeach
-          </select>
-        </div>
-        <div class="col-md-12 row">
-          <div class="form-group col-md-9 row">
-            <span>Menampilkan&nbsp;&nbsp;</span>
-            <div class="col-xs-3">
-              <select onchange="selectChange()" class="filter_showing select2 form-control form-control-sm">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="1000">1000</option>
-              </select>
-            </div>
-            <span>&nbsp;&nbsp;data</span>
-          </div>
-          <div class=" col-md-3 row" style="padding-bottom: 10px;">
-            <div class="col-md-12 col-xs-2 pull-right">
-              <input type="text" placeholder="Cari" value="" class="form-control filter_nama form-control-sm search-laravel" onkeyup="cari()">
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive table_append" style="overflow-x: auto;">
-	        
+        <div class="table-responsive" s>
+	        <table id="table_data" class="table table-bordered" cellspacing="0" >
+            <thead class="bg-gradient-primary text-white head_table">
+              <th>No</th>
+              <th>Kode</th>
+              <th>Nama</th>
+              <th>Alamat</th>
+              <th>Telpon</th>
+              <th>Fax</th>
+              <th>Kota</th>
+              <th>Dibuat</th>
+              <th class="text-center">Aksi</th>
+            </thead>
+            <tbody>
+            </tbody>
+          </table> 
         </div>
       </div>
     </div>
@@ -78,7 +63,7 @@
 
   function table_append() {
     $.ajax({
-        url:'{{ route('datatable_desa') }}?page='+page,
+        url:'{{ route('datatable_group_akun') }}?page='+page,
         type:'get',
         data:{provinsi_id: function() { return $('.filter_provinsi option:selected').val() },
               kecamatan_id: function() { return $('.filter_kecamatan option:selected').val() },
@@ -110,7 +95,7 @@
 
   function edit(id) {
     $.ajax({
-        url:'{{ route('edit_desa') }}',
+        url:'{{ route('edit_group_akun') }}',
         type:'get',
         data:{id},
         dataType:'json',
@@ -177,7 +162,7 @@
     if (inputReady == 1) {
       inputReady = 0;
       $.ajax({
-          url:'{{ route('simpan_desa') }}',
+          url:'{{ route('simpan_group_akun') }}',
           type:'post',
           data:$('.tabel_modal :input').serialize(),
           dataType:'json',
@@ -244,7 +229,7 @@
               });
 
               $.ajax({
-                  url:'{{ route('hapus_desa') }}',
+                  url:'{{ route('hapus_group_akun') }}',
                   type:'get',
                   data:{id},
                   dataType:'json',

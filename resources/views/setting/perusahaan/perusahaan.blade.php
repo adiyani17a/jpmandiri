@@ -41,49 +41,49 @@
                 <tr>
                   <th>Nama</th>
                   <td colspan="3">
-                    <input type="text" value="{{ $data->nama or null }}" placeholder="Nama perusahaan" name="nama" class="nama form-control clean wajib">
-                    <input type="hidden" name="id" class="id clean" value="{{ $data->id or null }}">
-                    <input type="hidden" name="created_by" class="created_by" value="{{ $data->created_by or null }}">
-                    <input type="hidden" name="updated_by" class="updated_by" value="{{ $data->updated_by or null }}">
+                    <input type="text" value="{{ $data->nama }}" placeholder="Nama perusahaan" name="nama" class="nama form-control clean wajib">
+                    <input type="hidden" name="id" class="id clean" value="{{ $data->id }}">
+                    <input type="hidden" name="created_by" class="created_by" value="{{ $data->created_by }}">
+                    <input type="hidden" name="updated_by" class="updated_by" value="{{ Auth::user()->id }}">
                     {{ csrf_field() }}
                   </td>
                 </tr>
                 <tr>
                   <th>Alamat</th>
                   <td colspan="3">
-                    <input value="{{ $data->alamat or null }}" type="text" placeholder="Alamat perusahaan" name="alamat" class="alamat form-control clean wajib">
+                    <input value="{{ $data->alamat }}" type="text" placeholder="Alamat perusahaan" name="alamat" class="alamat form-control clean wajib">
                   </td>
                 </tr>
                 <tr>
                   <th>Kota</th>
                   <td colspan="3">
-                    <input value="{{ $data->kota or null }}" type="text" placeholder="Kota perusahaan" name="kota" class="kota form-control clean wajib">
+                    <input value="{{ $data->kota }}" type="text" placeholder="Kota perusahaan" name="kota" class="kota form-control clean wajib">
                   </td>
                 </tr>
                 <tr>
                   <th>Telepon</th>
                   <td>
-                    <input value="{{ $data->telepon or null }}" type="text" placeholder="Telepon perusahaan" name="telepon" class="telepon form-control clean wajib">
+                    <input value="{{ $data->telepon }}" type="text" placeholder="Telepon perusahaan" name="telepon" class="telepon form-control clean wajib">
                   </td>
                   <th>Fax</th>
                   <td>
-                    <input value="{{ $data->fax or null }}" type="text" placeholder="Fax perusahaan" name="fax" class="fax form-control clean wajib">
+                    <input value="{{ $data->fax }}" type="text" placeholder="Fax perusahaan" name="fax" class="fax form-control clean wajib">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">
                     <h6>Logo</h6>
-                    <div class="file-upload">
+                    <div class="file-upload active">
                       <div class="file-select">
                         <div class="file-select-button" id="fileName">Image</div>
-                        <div class="file-select-name" id="noFile">Choose Image...</div> 
+                        <div class="file-select-name" id="noFile">{{ $data->image }}</div> 
                         <input type="file" name="image" onchange="loadFile(event)" id="chooseFile">
                       </div>
                     </div>
                   </td>
                   <td colspan="2">
                     <div class="preview_td pull-right">
-                        <img style="width: 100px;height: 100px;border:1px solid pink" id="output" >
+                        <img style="width: 100px;height: 100px;border:1px solid pink" id="output" src="{{ asset('storage/uploads/perusahaan/original') }}/{{ $data->image }}">
                     </div>
                   </td>
                 </tr>
@@ -274,10 +274,10 @@ $('.simpan').click(function(){
             });
             $('#modal_bispro').modal('hide');
           }
-
-          var table = $('#table_data').DataTable();
-          table.ajax.reload(null, false);
-          $('.clean').val('');
+          location.reload();
+          // var table = $('#table_data').DataTable();
+          // table.ajax.reload(null, false);
+          // $('.clean').val('');
         },
         error:function(){
           iziToast.warning({
@@ -378,9 +378,9 @@ function hapus(id) {
                     });
                   }
 
-                  var table = $('#table_data').DataTable();
-                  table.ajax.reload(null, false);
-                  $('.clean').val('');  
+                  // var table = $('#table_data').DataTable();
+                  // table.ajax.reload(null, false);
+                  // $('.clean').val('');  
                 },
                 error:function(){
                   iziToast.warning({

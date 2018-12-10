@@ -579,7 +579,7 @@ class setting_controller extends Controller
 			$id = 1;
 			// IMAGE INTERVENTION
 			$file = $req->file('image');
-			dd($file);
+			// dd($file);
         if ($file != null) {
           $file_name = 'perusahaan_'. $id .'_' . '.' . $file->getClientOriginalExtension();
           if (!is_dir(storage_path('uploads/perusahaan/thumbnail/'))) {

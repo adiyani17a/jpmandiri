@@ -61,36 +61,47 @@ Route::group(['middleware' => 'auth'], function () {
 	// MASTER BERSAMA
 		// MASTER PROVINSI
 		Route::get('master_bersama/provinsi', 'master\master_bersama_controller@provinsi')->name('provinsi');
-		Route::get('master/edit_provinsi', 'master\master_bersama_controller@edit_provinsi')->name('edit_provinsi');
-		Route::get('master/datatable_provinsi', 'master\master_bersama_controller@datatable_provinsi')->name('datatable_provinsi');
-		Route::post('master/simpan_provinsi', 'master\master_bersama_controller@simpan_provinsi')->name('simpan_provinsi');
-		Route::get('master/hapus_provinsi', 'master\master_bersama_controller@hapus_provinsi')->name('hapus_provinsi');
+		Route::get('master_bersama/edit_provinsi', 'master\master_bersama_controller@edit_provinsi')->name('edit_provinsi');
+		Route::get('master_bersama/datatable_provinsi', 'master\master_bersama_controller@datatable_provinsi')->name('datatable_provinsi');
+		Route::post('master_bersama/simpan_provinsi', 'master\master_bersama_controller@simpan_provinsi')->name('simpan_provinsi');
+		Route::get('master_bersama/hapus_provinsi', 'master\master_bersama_controller@hapus_provinsi')->name('hapus_provinsi');
 		// MASTER KOTA
 		Route::get('master_bersama/kota', 'master\master_bersama_controller@kota')->name('kota');
-		Route::get('master/edit_kota', 'master\master_bersama_controller@edit_kota')->name('edit_kota');
-		Route::get('master/datatable_kota', 'master\master_bersama_controller@datatable_kota')->name('datatable_kota');
-		Route::post('master/simpan_kota', 'master\master_bersama_controller@simpan_kota')->name('simpan_kota');
-		Route::get('master/hapus_kota', 'master\master_bersama_controller@hapus_kota')->name('hapus_kota');
+		Route::get('master_bersama/edit_kota', 'master\master_bersama_controller@edit_kota')->name('edit_kota');
+		Route::get('master_bersama/datatable_kota', 'master\master_bersama_controller@datatable_kota')->name('datatable_kota');
+		Route::post('master_bersama/simpan_kota', 'master\master_bersama_controller@simpan_kota')->name('simpan_kota');
+		Route::get('master_bersama/hapus_kota', 'master\master_bersama_controller@hapus_kota')->name('hapus_kota');
 		// MASTER KECAMATAN
 		Route::get('master_bersama/kecamatan', 'master\master_bersama_controller@kecamatan')->name('kecamatan');
-		Route::get('master/edit_kecamatan', 'master\master_bersama_controller@edit_kecamatan')->name('edit_kecamatan');
-		Route::get('master/datatable_kecamatan', 'master\master_bersama_controller@datatable_kecamatan')->name('datatable_kecamatan');
-		Route::post('master/simpan_kecamatan', 'master\master_bersama_controller@simpan_kecamatan')->name('simpan_kecamatan');
-		Route::get('master/hapus_kecamatan', 'master\master_bersama_controller@hapus_kecamatan')->name('hapus_kecamatan');
+		Route::get('master_bersama/edit_kecamatan', 'master\master_bersama_controller@edit_kecamatan')->name('edit_kecamatan');
+		Route::get('master_bersama/datatable_kecamatan', 'master\master_bersama_controller@datatable_kecamatan')->name('datatable_kecamatan');
+		Route::post('master_bersama/simpan_kecamatan', 'master\master_bersama_controller@simpan_kecamatan')->name('simpan_kecamatan');
+		Route::get('master_bersama/hapus_kecamatan', 'master\master_bersama_controller@hapus_kecamatan')->name('hapus_kecamatan');
 		// MASTER DESA
 		Route::get('master_bersama/desa', 'master\master_bersama_controller@desa')->name('desa');
-		Route::get('master/edit_desa', 'master\master_bersama_controller@edit_desa')->name('edit_desa');
-		Route::get('master/datatable_desa', 'master\master_bersama_controller@datatable_desa')->name('datatable_desa');
-		Route::post('master/simpan_desa', 'master\master_bersama_controller@simpan_desa')->name('simpan_desa');
-		Route::get('master/hapus_desa', 'master\master_bersama_controller@hapus_desa')->name('hapus_desa');
-		
-		// SETTING CABANG
+		Route::get('master_bersama/edit_desa', 'master\master_bersama_controller@edit_desa')->name('edit_desa');
+		Route::get('master_bersama/datatable_desa', 'master\master_bersama_controller@datatable_desa')->name('datatable_desa');
+		Route::post('master_bersama/simpan_desa', 'master\master_bersama_controller@simpan_desa')->name('simpan_desa');
+		Route::get('master_bersama/hapus_desa', 'master\master_bersama_controller@hapus_desa')->name('hapus_desa');
+		// MASTER CABANG
 		Route::get('master_bersama/cabang', 'master\master_bersama_controller@cabang')->name('cabang');
-		Route::get('master/edit_cabang', 'master\master_bersama_controller@edit_cabang')->name('edit_cabang');
-		Route::get('master/datatable_cabang', 'master\master_bersama_controller@datatable_cabang')->name('datatable_cabang');
-		Route::post('master/simpan_cabang', 'master\master_bersama_controller@simpan_cabang')->name('simpan_cabang');
-		Route::get('master/hapus_cabang', 'master\master_bersama_controller@hapus_cabang')->name('hapus_cabang');
-
+		Route::get('master_bersama/edit_cabang', 'master\master_bersama_controller@edit_cabang')->name('edit_cabang');
+		Route::get('master_bersama/datatable_cabang', 'master\master_bersama_controller@datatable_cabang')->name('datatable_cabang');
+		Route::post('master_bersama/simpan_cabang', 'master\master_bersama_controller@simpan_cabang')->name('simpan_cabang');
+		Route::get('master_bersama/hapus_cabang', 'master\master_bersama_controller@hapus_cabang')->name('hapus_cabang');
+	// MASTER AKUNTANSI
+		// MASTER GROUP AKUN
+		Route::get('master_akuntansi/group_akun', 'master\master_akuntansi_controller@group_akun')->name('group_akun');
+		Route::get('master_akuntansi/edit_group_akun', 'master\master_akuntansi_controller@edit_group_akun')->name('edit_group_akun');
+		Route::get('master_akuntansi/datatable_group_akun', 'master\master_akuntansi_controller@datatable_group_akun')->name('datatable_group_akun');
+		Route::post('master_akuntansi/simpan_group_akun', 'master\master_akuntansi_controller@simpan_group_akun')->name('simpan_group_akun');
+		Route::get('master_akuntansi/hapus_group_akun', 'master\master_akuntansi_controller@hapus_group_akun')->name('hapus_group_akun');
+		// MASTER AKUN
+		Route::get('master_akuntansi/akun', 'master\master_akuntansi_controller@akun')->name('akun');
+		Route::get('master_akuntansi/edit_akun', 'master\master_akuntansi_controller@edit_akun')->name('edit_akun');
+		Route::get('master_akuntansi/datatable_akun', 'master\master_akuntansi_controller@datatable_akun')->name('datatable_akun');
+		Route::post('master_akuntansi/simpan_akun', 'master\master_akuntansi_controller@simpan_akun')->name('simpan_akun');
+		Route::get('master_akuntansi/hapus_akun', 'master\master_akuntansi_controller@hapus_akun')->name('hapus_akun');
 		
 		
 });

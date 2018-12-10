@@ -65,8 +65,20 @@
              @if (Auth::user()->akses('master kota','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kota') }}">Master Kota</a></li>@endif
              @if (Auth::user()->akses('master kecamatan','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kecamatan') }}">Master Kecamatan</a></li>@endif
              @if (Auth::user()->akses('master desa','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('desa') }}">Master Desa</a></li>@endif
-             
              @if (Auth::user()->akses('master cabang','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('cabang') }}">Master Cabang</a></li>@endif
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#master_keuangan" aria-expanded="false" aria-controls="master_keuangan">
+        <span class="menu-title">Master Akuntansi</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-chart-arc menu-icon"></i>
+      </a>
+      <div class="collapse" id="master_keuangan">
+        <ul class="nav flex-column sub-menu">
+          @if (Auth::user()->akses('master group akun','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('group_akun') }}">Master Group Akun</a></li>@endif
+          @if (Auth::user()->akses('master akun','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('akun') }}">Master Akun</a></li>@endif
         </ul>
       </div>
     </li>
