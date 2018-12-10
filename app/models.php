@@ -10,6 +10,7 @@ use App\setting\hak_akses;
 use App\setting\jabatan;
 use App\setting\cabang;
 use App\setting\list_db;
+use App\setting\perusahaan;
 use App\master\provinsi;
 use App\master\kota;
 use App\master\kecamatan;
@@ -168,6 +169,21 @@ class models extends Model
 			$desa = new desa();
 			$desa->changeConnection($database,$host,$database,$username,$password);
 			return $desa;
+		}
+	}
+
+	public function perusahaan($name = null,$host = null,$database = null,$username = null,$password = null)
+	{	
+		if (Auth::check()) {
+			$nama     = Auth::user()->list_db->database;
+			$host     = Auth::user()->list_db->host;
+			$database = Auth::user()->list_db->database;
+			$username = Auth::user()->list_db->username;
+			$password = Auth::user()->list_db->password;
+
+			$perusahaan = new perusahaan();
+			$perusahaan->changeConnection($database,$host,$database,$username,$password);
+			return $perusahaan;
 		}
 	}
 

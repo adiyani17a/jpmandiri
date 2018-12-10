@@ -60,7 +60,7 @@
             </div>
           </div>
         </div>
-        <div class="table-responsive table_append">
+        <div class="table-responsive table_append" style="overflow-x: auto;">
 	        
         </div>
       </div>

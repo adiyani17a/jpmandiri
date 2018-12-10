@@ -548,13 +548,15 @@ class setting_controller extends Controller
 			if (Auth::user()->akses('setting perusahaan','aktif') == false) {
 				return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 			}
-			return view('setting.perusahaan.perusahaan');
+
+			$data = $this->model->perusahaan()->first();
+			return view('setting.perusahaan.perusahaan',compact('data'));
 		}
 	}
 	
 	public function edit_perusahaan(Request $req)
 	{
-		if (Auth::user()->akses('master perusahaan','ubah') == false) {
+		if (Auth::user()->akses('setting perusahaan','ubah') == false) {
 			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 		}
 		$data = $this->model->perusahaan()->find($req->id);
@@ -564,7 +566,7 @@ class setting_controller extends Controller
 
 	public function simpan_perusahaan(Request $req)
 	{
-		if (Auth::user()->akses('master perusahaan','tambah') == false) {
+		if (Auth::user()->akses('setting perusahaan','tambah') == false) {
 			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 		}
 		$perusahaan = $this->model->perusahaan();
@@ -573,26 +575,51 @@ class setting_controller extends Controller
 			DB::connection(Auth::user()->list_db->database)->beginTransaction();
 			$input = $req->all();
 			unset($input['_token']);
-			$id = $this->model->perusahaan()->max('id')+1;
+			unset($input['image']);
+			$id = 1;
+			// IMAGE INTERVENTION
+			$file = $req->file('image');
+			dd($file);
+        if ($file != null) {
+          $file_name = 'perusahaan_'. $id .'_' . '.' . $file->getClientOriginalExtension();
+          if (!is_dir(storage_path('uploads/perusahaan/thumbnail/'))) {
+            mkdir(storage_path('uploads/perusahaan/thumbnail/'), 0777, true);
+          }
 
-			
+          if (!is_dir(storage_path('uploads/perusahaan/original/'))) {
+            mkdir(storage_path('uploads/perusahaan/original/'), 0777, true);
+          }
 
+          $thumbnail_path = storage_path('uploads/perusahaan/thumbnail/');
+          $original_path = storage_path('uploads/perusahaan/original/');
+          // return $original_path;
+          Image::make($file)
+                  ->resize(261,null,function ($constraint) {
+                    $constraint->aspectRatio();
+                     })
+                  ->save($original_path . $file_name)
+                  ->resize(90, 90)
+                  ->save($thumbnail_path . $file_name);
+        }else{
+		  		$data = $this->model->perusahaan()->where('id',$id)->first();
+          $file_name = $data->image;
+        }
+
+			$input['image'] = $file_name;
+			// SAVE OR UPDATE
 			if ($req->id == null or $req->id == '') {
-				$kode = $this->model->perusahaan()->where('kode',$input['kode'])->first();
-				if ($kode != null) {
-					return response()->json(['status'=>0,'pesan'=>'Kode Sudah Terpakai']);
-				}
 				$input['id'] = $id;
 				$perusahaan->create($input);
-				$log_history = $this->model->log_history($id,'simpan master perusahaan','s_perusahaan');
+				$log_history = $this->model->log_history($id,'simpan setting perusahaan','s_perusahaan');
 				DB::connection(Auth::user()->list_db->database)->commit();
 				return response()->json(['status'=>1,'pesan'=>'Data Berhasil Disimpan']);
 			}else{
 				$perusahaan->where('id',$req->id)->update($input);
-				$log_history = $this->model->log_history($req->id,'Update master perusahaan','s_perusahaan');
+				$log_history = $this->model->log_history($req->id,'Update setting perusahaan','s_perusahaan');
 				DB::connection(Auth::user()->list_db->database)->commit();
 				return response()->json(['status'=>2,'pesan'=>'Data Berhasil Diupdate']);
 			}
+
 		} catch (Exception $e) {
 			DB::connection(Auth::user()->list_db->database)->rollBack();
 			dd($e);
@@ -602,7 +629,7 @@ class setting_controller extends Controller
 	public function hapus_perusahaan(Request $req)
 	{
 		DB::beginTransaction();
-		if (Auth::user()->akses('master perusahaan','hapus') == false) {
+		if (Auth::user()->akses('setting perusahaan','hapus') == false) {
 			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 		}
 		try {

@@ -19,7 +19,10 @@
   <!-- endinject -->
 
   <style type="text/css">
-    
+    .nopad{
+      padding: 0px;
+    }
+
     .chat{
       max-height: 400px;
       height: 400px;
@@ -642,6 +645,11 @@
 
     .slider.round:before {
       border-radius: 50%;
+    }
+
+    .disabled{
+      pointer-events: none;
+      opacity: 0.7;
     }
 
 
