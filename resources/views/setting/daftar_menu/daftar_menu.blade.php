@@ -37,7 +37,7 @@
               <th>No</th>
               <th>Nama</th>
               <th>Group Menu</th>
-              <th>Keterangan</th>
+              <th>Url</th>
               <th>Aksi</th>
             </thead>
             <tbody>
@@ -91,7 +91,7 @@ $(document).ready(function(){
       {data: 'id', name: 'id'},
       {data: 'nama', name: 'nama'},
       {data: 'group_menu', name: 'group_menu'},
-      {data: 'keterangan', name: 'keterangan'},
+      {data: 'url', name: 'url'},
       {data: 'aksi', name: 'aksi'},
     ]
   });

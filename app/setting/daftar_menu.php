@@ -18,7 +18,7 @@ class daftar_menu extends Model
 
 	protected $fillable = ['id',
 						   'nama',
-						   'keterangan',
+						   'url',
 						   'created_by',
 						   'updated_by',
 						   'group_menu_id'
@@ -26,7 +26,7 @@ class daftar_menu extends Model
 
 	public function hak_akses()
 	{
-        return $this->hasMany('App\setting\hak_akses','daftar_menu');
+    	return $this->hasMany('App\setting\hak_akses','daftar_menu');
 	}
 
 	public function group_menu()
