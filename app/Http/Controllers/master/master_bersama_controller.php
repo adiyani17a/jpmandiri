@@ -496,6 +496,7 @@ class master_bersama_controller extends Controller
 		if (Auth::user()->akses('master cabang','tambah') == false) {
 			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
 		}
+
 		$cabang = $this->model->cabang();
 
 		try {
@@ -543,5 +544,198 @@ class master_bersama_controller extends Controller
 			DB::rollBack();
 			return response()->json(['status'=>0,'pesan'=>'Data Tidak Bisa Dihapus']);
 		}
+	}
+
+	public function pegawai()
+	{
+		if (Auth::check()) {
+			if (Auth::user()->akses('master pegawai','aktif') == false) {
+				return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+			}
+
+			$provinsi = $this->model->provinsi()->get();
+			$kota = $this->model->kota()->get();
+
+			return view('master.master_bersama.pegawai.pegawai',compact('provinsi','kota','data'));
+		}
+	}
+
+	public function datatable_pegawai(Request $req)
+	{	
+		if ($req->filter_bagian == '' or $req->filter_bagian == null) {
+          $bagian = '';
+        }else{
+          $bagian = 'and bagian = '."'$req->filter_bagian'";
+        }
+
+        if ($req->filter_nama != '') {
+          $req->filter_nama = strtoupper($req->filter_nama);
+          $nama = 'and nama like '."'%$req->filter_nama%'";
+        }else{
+          $nama = '';
+        }
+
+		$data = $this->model->pegawai()->whereRaw("id != 'null' $bagian $nama")->paginate($req->filter_showing);
+		return view('master.master_bersama.pegawai.tabel_pegawai',compact('data'));
+	}
+
+	public function edit_pegawai(Request $req)
+	{
+		if (Auth::user()->akses('master pegawai','ubah') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		$data = $this->model->pegawai()->find($req->id);
+
+		return response()->json(['status'=>1,'data'=>$data]);
+	}
+
+	public function simpan_pegawai(Request $req)
+	{
+		if (Auth::user()->akses('master pegawai','tambah') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+
+		$pegawai = $this->model->pegawai();
+
+		try {
+			DB::connection(Auth::user()->list_db->database)->beginTransaction();
+			$input = $req->all();
+			unset($input['_token']);
+			$id = $this->model->pegawai()->max('id')+1;
+
+			if ($req->id == null or $req->id == '') {
+
+				$file = $req->file('foto');
+		        if ($file != null) {
+					$file_name = 'pegawai_'. $id .'_' . '.' . $file->getClientOriginalExtension();
+					if (!is_dir(storage_path('uploads/pegawai/thumbnail/'))) {
+						mkdir(storage_path('uploads/pegawai/thumbnail/'), 0777, true);
+					}
+
+					if (!is_dir(storage_path('uploads/pegawai/original/'))) {
+						mkdir(storage_path('uploads/pegawai/original/'), 0777, true);
+					}
+
+					$thumbnail_path = storage_path('uploads/pegawai/thumbnail/');
+					$original_path = storage_path('uploads/pegawai/original/');
+
+					Image::make($file)
+					      ->resize(261,null,function ($constraint) {
+					        $constraint->aspectRatio();
+					         })
+					      ->save($original_path . $file_name)
+					      ->resize(90, 90)
+					      ->save($thumbnail_path . $file_name);
+		        }else{
+					$file_name ='TIDAK ADA';
+		        }
+
+				$input['id'] = $id;
+				$input['foto'] = $file_name;
+				
+				$pegawai->insert($input);
+				$log_history = $this->model->log_history($id,'simpan master pegawai','m_pegawai');
+				DB::connection(Auth::user()->list_db->database)->commit();
+				return response()->json(['status'=>1,'pesan'=>'Data Berhasil Disimpan']);
+			}else{
+				$file = $req->file('foto');
+		        if ($file != null) {
+					$file_name = 'pegawai_'. $req->id .'_' . '.' . $file->getClientOriginalExtension();
+					if (!is_dir(storage_path('uploads/pegawai/thumbnail/'))) {
+						mkdir(storage_path('uploads/pegawai/thumbnail/'), 0777, true);
+					}
+
+					if (!is_dir(storage_path('uploads/pegawai/original/'))) {
+						mkdir(storage_path('uploads/pegawai/original/'), 0777, true);
+					}
+
+					$thumbnail_path = storage_path('uploads/pegawai/thumbnail/');
+					$original_path = storage_path('uploads/pegawai/original/');
+
+					Image::make($file)
+					      ->resize(261,null,function ($constraint) {
+					        $constraint->aspectRatio();
+					         })
+					      ->save($original_path . $file_name)
+					      ->resize(90, 90)
+					      ->save($thumbnail_path . $file_name);
+		        }else{
+					$file_name = $pegawai->where('id',$req->id)->first()->foto;
+		        }
+
+				$input['foto'] = $file_name;
+				$pegawai->where('id',$req->id)->update($input);
+				$log_history = $this->model->log_history($req->id,'Update master pegawai','m_pegawai');
+				DB::connection(Auth::user()->list_db->database)->commit();
+				return response()->json(['status'=>2,'pesan'=>'Data Berhasil Diupdate']);
+			}
+		} catch (Exception $e) {
+			DB::connection(Auth::user()->list_db->database)->rollBack();
+			dd($e);
+		}
+	}
+
+	public function hapus_pegawai(Request $req)
+	{
+		if (Auth::user()->akses('master pegawai','hapus') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		
+		$pegawai = $this->model->pegawai();
+
+		try {
+			DB::connection(Auth::user()->list_db->database)->beginTransaction();
+
+			try {
+				unlink(storage_path('uploads/pegawai/thumbnail').'/'.$pegawai->where('id',$req->id)->first()->foto);
+	    		unlink(storage_path('uploads/pegawai/original').'/'.$pegawai->where('id',$req->id)->first()->foto);
+			} catch (Exception $e) {
+				
+			}
+				
+			$delete = $pegawai->where('id',$req->id)->delete();
+			$log_history = $this->model->log_history($req->id,'Hapus master pegawai','m_pegawai');
+			DB::connection(Auth::user()->list_db->database)->commit();
+			return response()->json(['status'=>1,'pesan'=>'Data berhasil dihapus']);
+		} catch (Exception $e) {
+			DB::connection(Auth::user()->list_db->database)->rollBack();
+			return response()->json(['status'=>0,'pesan'=>'Data Tidak Bisa Dihapus']);
+		}
+	}
+
+	public function cetak_pegawai(Request $req)
+	{
+		return view('');
+	}
+
+	public function ubah_status_pegawai(Request $req)
+	{
+		
+
+		if (Auth::user()->akses('master pegawai','validasi') == false) {
+			return Response::json(['status'=>0,'pesan'=>'Anda Tidak Memiliki otorisasi']);
+		}
+		
+		$pegawai = $this->model->pegawai();
+
+		try {
+			DB::connection(Auth::user()->list_db->database)->beginTransaction();
+			if ($req->status == 'true') {
+				$status = 'Active';
+			}else{
+				$status = 'Inactive';
+			}
+
+			$input['status'] = $status;
+		
+			$pegawai->where('id',$req->id)->update($input);
+			$log_history = $this->model->log_history($req->id,'Update master cabang','s_cabang');
+			DB::connection(Auth::user()->list_db->database)->commit();
+			return Response::json(['status'=>1,'pesan'=>'Data Berhasil Dirubah']);
+		} catch (Exception $e) {
+			DB::connection(Auth::user()->list_db->database)->rollBack();
+			dd($e);
+		}
+
 	}
 }

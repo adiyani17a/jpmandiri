@@ -186,8 +186,22 @@ class setting_controller extends Controller
 			unset($input['_token']);
 			$id = $this->model->daftar_menu()->max('id')+1;
 
+			$url = explode(' ', $req->nama);
+			$input['url'] = '';
+			foreach ($url as $i => $d) {
+				if ($i == 0 ) {
+					$input['url'].= $url[$i].'/';
+				}elseif ($i > 0 && $i != count($url)-1 ){
+					$input['url'].= $url[$i].'_';
+				}else{
+					$input['url'].= $url[$i];
+				}
+			}
+
 			if ($req->id == null or $req->id == '') {
 				$input['id'] = $id;
+				
+
 				$daftar_menu->create($input);
 				$log_history = $this->model->log_history($id,'simpan daftar menu','s_daftar_menu');
 

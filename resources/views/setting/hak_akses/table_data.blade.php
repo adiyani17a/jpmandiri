@@ -10,7 +10,7 @@
     <div id="collapse{{ $i }}" class="panel-collapse collapse">
       <div class="panel-body" style="border: 1px solid #e5e5e5;">
         <div class="table-responsive">
-        <table class="table table-hover table-bordered" width="100%" cellspacing="0">
+        <table class="table table-hover table-bordered" width="100%" cellspacing="0" style="overflow: hidden;">
           <thead class="bg-gradient-danger">
             <tr class="text-light">
               <th width="500">Nama Menu</th>

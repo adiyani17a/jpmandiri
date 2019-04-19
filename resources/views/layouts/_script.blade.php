@@ -9,6 +9,8 @@
 <script src="{{ asset('assets/plugin/scrollbar/jquery.custom-scrollbar.js') }} "></script>
 <script src="{{ asset('assets/plugin/datatables.net/js/jquery.dataTables.js')}}"></script>
 <script src="{{ asset('assets/plugin/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
+<script src="{{ asset('assets/plugin/dropify-master/dist/js/dropify.js') }} "></script>
+<script src="{{ asset('assets/plugin/datapicker/bootstrap-datepicker.js') }} "/></script>
 
 <script type="text/javascript">
 "use strict";

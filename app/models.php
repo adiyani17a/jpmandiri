@@ -15,6 +15,8 @@ use App\master\provinsi;
 use App\master\kota;
 use App\master\kecamatan;
 use App\master\desa;
+use App\master\pegawai;
+use App\master\agama;
 use Config;
 use DB;
 use Auth;
@@ -184,6 +186,36 @@ class models extends Model
 			$perusahaan = new perusahaan();
 			$perusahaan->changeConnection($database,$host,$database,$username,$password);
 			return $perusahaan;
+		}
+	}
+
+	public function pegawai($name = null,$host = null,$database = null,$username = null,$password = null)
+	{	
+		if (Auth::check()) {
+			$nama     = Auth::user()->list_db->database;
+			$host     = Auth::user()->list_db->host;
+			$database = Auth::user()->list_db->database;
+			$username = Auth::user()->list_db->username;
+			$password = Auth::user()->list_db->password;
+
+			$pegawai = new pegawai();
+			$pegawai->changeConnection($database,$host,$database,$username,$password);
+			return $pegawai;
+		}
+	}
+
+	public function agama($name = null,$host = null,$database = null,$username = null,$password = null)
+	{	
+		if (Auth::check()) {
+			$nama     = Auth::user()->list_db->database;
+			$host     = Auth::user()->list_db->host;
+			$database = Auth::user()->list_db->database;
+			$username = Auth::user()->list_db->username;
+			$password = Auth::user()->list_db->password;
+
+			$agama = new agama();
+			$agama->changeConnection($database,$host,$database,$username,$password);
+			return $agama;
 		}
 	}
 

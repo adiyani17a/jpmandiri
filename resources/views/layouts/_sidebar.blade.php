@@ -4,7 +4,7 @@
       <a href="#" class="nav-link">
         <div class="nav-profile-image">
           <img src="{{ asset('assets/image/faces/face1.jpg') }} " alt="profile">
-          <span class="login-status online"></span> <!--change to offline or busy as needed-->              
+          <span class="login-status online"></span> <!--change to offline or busy as needed-->
         </div>
         <div class="nav-profile-text d-flex flex-column">
           <span class="font-weight-bold mb-2">{{ Auth::user()->name }}</span>
@@ -19,7 +19,6 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#utility" aria-expanded="false" aria-controls="utility">
         <span class="menu-title">Setting Utility</span>
@@ -38,7 +37,6 @@
         </ul>
       </div>
     </li>
-
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#settingKeuangan" aria-expanded="false" aria-controls="settingKeuangan">
         <span class="menu-title">Setting Keuangan</span>
@@ -52,7 +50,6 @@
         </ul>
       </div>
     </li>
-
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#master_bersama" aria-expanded="false" aria-controls="master_bersama">
         <span class="menu-title">Master Bersama</span>
@@ -61,11 +58,12 @@
       </a>
       <div class="collapse" id="master_bersama">
         <ul class="nav flex-column sub-menu">
-             @if (Auth::user()->akses('master provinsi','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('provinsi') }}">Master Provinsi</a></li>@endif
-             @if (Auth::user()->akses('master kota','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kota') }}">Master Kota</a></li>@endif
-             @if (Auth::user()->akses('master kecamatan','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kecamatan') }}">Master Kecamatan</a></li>@endif
-             @if (Auth::user()->akses('master desa','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('desa') }}">Master Desa</a></li>@endif
-             @if (Auth::user()->akses('master cabang','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('cabang') }}">Master Cabang</a></li>@endif
+          @if (Auth::user()->akses('master provinsi','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('provinsi') }}">Master Provinsi</a></li>@endif
+          @if (Auth::user()->akses('master kota','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kota') }}">Master Kota</a></li>@endif
+          @if (Auth::user()->akses('master kecamatan','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('kecamatan') }}">Master Kecamatan</a></li>@endif
+          @if (Auth::user()->akses('master desa','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('desa') }}">Master Desa</a></li>@endif
+          @if (Auth::user()->akses('master cabang','aktif'))<li class="nav-item"> <li class="nav-item"> <a class="nav-link" href="{{ route('cabang') }}">Master Cabang</a></li>@endif
+          @if (Auth::user()->akses('master pegawai','aktif'))<li class="nav-item"> <a class="nav-link" href="{{ route('pegawai') }}">Master Pegawai</a></li>@endif
         </ul>
       </div>
     </li>
@@ -82,14 +80,12 @@
         </ul>
       </div>
     </li>
-
     <li class="nav-item">
       <a class="nav-link" href="pages/forms/basic_elements.html">
         <span class="menu-title">Forms</span>
         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
       </a>
     </li>
-
     <li class="nav-item">
       <a class="nav-link" href="pages/charts/chartjs.html">
         <span class="menu-title">Charts</span>
@@ -116,7 +112,7 @@
           <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
           <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
         </ul>
-        </div>
+      </div>
     </li>
   </ul>
 </nav>

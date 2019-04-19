@@ -205,7 +205,7 @@ $('.simpan').click(function(){
           }
 
           var table = $('#table_data').DataTable();
-          table.ajax.reload();
+          table.ajax.reload(null,false);
           $('.clean').val('');
         },
         error:function(){
@@ -272,7 +272,7 @@ function hapus(id) {
                   }
 
                   var table = $('#table_data').DataTable();
-                  table.ajax.reload();
+                  table.ajax.reload(null,false);
                   $('.clean').val('');  
                 },
                 error:function(){

@@ -19,3 +19,7 @@ function get_menu() {
   return $user = DB::table('s_daftar_menu')->get();
 }
 
+function agama() {
+  return DB::table('m_agama')->get();
+}
+

@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="{{ asset('assets/plugin/scrollbar/jquery.custom-scrollbar.css')}}">
   <link rel="stylesheet" href="{{ asset('assets/plugin/font-awesome/css/font-awesome.min.css')}}" />
   <link rel="stylesheet" href="{{ asset('assets/plugin/select2-bootstrap-theme/dist/select2-bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/plugin/dropify-master/dist/css/dropify.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/plugin/datapicker/datepicker3.css')}}">
+  
+
   <!-- endinject -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} ">
